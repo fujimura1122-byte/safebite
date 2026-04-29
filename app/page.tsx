@@ -20,7 +20,7 @@ const REPORT_TARGETS = [
   {
     name: "警察庁サイバー局オンライン受付",
     desc: "サイバー事案の通報・情報提供の公式窓口",
-    url: "https://proc.npa.go.jp/",
+    url: "https://proc.npa.go.jp/portaltop/SP0200/07/02.html",
     color: "blue",
     tag: "公式",
   },
@@ -501,7 +501,7 @@ function ReportHubSection() {
               title="警察庁オンライン受付への通報文"
               text={result.police_report_text}
               actionLabel="警察庁で通報する"
-              actionUrl="https://proc.npa.go.jp/"
+              actionUrl="https://proc.npa.go.jp/portaltop/SP0200/07/02.html"
               color="blue"
               onSubmit={() => setSubmitted(true)}
             />
