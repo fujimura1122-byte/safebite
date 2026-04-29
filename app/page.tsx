@@ -18,11 +18,11 @@ const REPORT_TARGETS = [
     tag: "最推奨",
   },
   {
-    name: "警察庁サイバー局オンライン受付",
-    desc: "サイバー事案の通報・情報提供の公式窓口",
-    url: "https://proc.npa.go.jp/portaltop/SP0200/07/02.html",
+    name: "都道府県警察 サイバー犯罪相談窓口",
+    desc: "各都道府県警察のサイバー相談窓口一覧。巻き込まれた・被害を受けた場合はこちら",
+    url: "https://www.npa.go.jp/bureau/cyber/countermeasures/local.html",
     color: "blue",
-    tag: "公式",
+    tag: "相談窓口",
   },
   {
     name: "X（Twitter）公式通報フォーム",
@@ -496,12 +496,12 @@ function ReportHubSection() {
               onSubmit={() => setSubmitted(true)}
             />
 
-            {/* 警察庁通報文 */}
+            {/* 都道府県警察相談窓口 */}
             <ReportTextCard
-              title="警察庁オンライン受付への通報文"
+              title="都道府県警察 サイバー犯罪相談窓口への相談文"
               text={result.police_report_text}
-              actionLabel="警察庁で通報する"
-              actionUrl="https://proc.npa.go.jp/portaltop/SP0200/07/02.html"
+              actionLabel="地元警察の相談窓口を探す"
+              actionUrl="https://www.npa.go.jp/bureau/cyber/countermeasures/local.html"
               color="blue"
               onSubmit={() => setSubmitted(true)}
             />
