@@ -20,7 +20,7 @@ const REPORT_TARGETS = [
   {
     name: "都道府県警察 サイバー犯罪相談窓口",
     desc: "各都道府県警察のサイバー相談窓口一覧。巻き込まれた場合はこちら",
-    url: "https://www.npa.go.jp/bureau/cyber/countermeasures/local.html",
+    url: "https://www.npa.go.jp/bureau/cyber/soudan.html",
     tag: "相談窓口",
     accent: "text-blue-400 border-blue-500/30 bg-blue-500/10",
   },
@@ -528,7 +528,7 @@ function ReportHubSection() {
               title="都道府県警察 サイバー犯罪相談窓口への相談文"
               text={result.police_report_text}
               actionLabel="地元警察の相談窓口を探す"
-              actionUrl="https://www.npa.go.jp/bureau/cyber/countermeasures/local.html"
+              actionUrl="https://www.npa.go.jp/bureau/cyber/soudan.html"
               accent="blue"
               onSubmit={() => setSubmitted(true)}
             />
