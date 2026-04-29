@@ -82,6 +82,27 @@ function NavBar() {
 }
 
 // ============================================================
+// QUICK ESCAPE
+// ============================================================
+
+function QuickEscape() {
+  const escape = () => {
+    window.location.href = "https://weather.yahoo.co.jp/weather/";
+  };
+  return (
+    <button
+      onClick={escape}
+      aria-label="画面を今すぐ隠す"
+      className="fixed bottom-5 right-5 z-50 bg-gray-800 hover:bg-gray-900 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-xl transition-colors flex flex-col items-center gap-0.5"
+      style={{ minWidth: 72 }}
+    >
+      <span className="text-lg leading-none">👁</span>
+      <span>今すぐ隠す</span>
+    </button>
+  );
+}
+
+// ============================================================
 // HERO
 // ============================================================
 
@@ -90,45 +111,70 @@ function HeroSection() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-4 pt-14 bg-gradient-to-b from-red-50 to-white">
-      <div className="max-w-2xl mx-auto text-center">
-        <div className="inline-block bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full mb-6 tracking-wider">
-          AI危険度チェッカー搭載
+      <div className="max-w-md mx-auto w-full text-center">
+        <div className="inline-block bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full mb-5 tracking-wider">
+          AI危険度チェッカー搭載・無料・匿名
         </div>
-        <h1 className="text-5xl font-black text-gray-900 leading-tight mb-4">
+        <h1 className="text-4xl font-black text-gray-900 leading-tight mb-3">
           そのバイト、<br />
           <span className="text-red-500">本当に大丈夫？</span>
         </h1>
-        <p className="text-gray-500 text-lg leading-relaxed mb-8">
-          SNSで見つけた求人のテキストをコピペするだけで、<br />
-          AIが<strong className="text-gray-800">0.5秒</strong>で危険度を判定します
+        <p className="text-gray-500 text-sm leading-relaxed mb-8">
+          SNSで見つけた求人文をコピペするだけで<br />
+          AIが<strong className="text-gray-800">即座に</strong>危険度を判定します
         </p>
-        <div className="flex gap-4 justify-center flex-wrap mb-12">
+
+        {/* 3大アクションボタン */}
+        <div className="flex flex-col gap-3 mb-8">
+          <button
+            onClick={() => scrollTo("checker")}
+            className="w-full bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-black py-5 rounded-2xl text-lg transition-colors shadow-lg shadow-red-200 flex items-center justify-center gap-3"
+          >
+            <span className="text-2xl">🔍</span>
+            <span>危険度チェック（コピペするだけ）</span>
+          </button>
+          <button
+            onClick={() => scrollTo("sos")}
+            className="w-full bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-black py-5 rounded-2xl text-lg transition-colors shadow-lg shadow-green-200 flex items-center justify-center gap-3"
+          >
+            <span className="text-2xl">🆘</span>
+            <span>今すぐ逃げたい・相談する</span>
+          </button>
+          <button
+            onClick={() => scrollTo("jobs")}
+            className="w-full bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-black py-5 rounded-2xl text-lg transition-colors shadow-lg shadow-blue-200 flex items-center justify-center gap-3"
+          >
+            <span className="text-2xl">💼</span>
+            <span>安全なバイトを探す</span>
+          </button>
+        </div>
+
+        {/* 信頼シグナル */}
+        <div className="bg-white border border-gray-100 rounded-2xl px-5 py-4 text-left shadow-sm mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-green-500 text-lg">🔒</span>
+            <span className="text-xs font-bold text-gray-700">このサイトは安全です</span>
+          </div>
+          <div className="flex flex-col gap-1.5 text-xs text-gray-500">
+            <div className="flex items-center gap-2"><span className="text-green-500">✓</span>入力文章はサーバーに一切保存されません</div>
+            <div className="flex items-center gap-2"><span className="text-green-500">✓</span>個人情報の収集・販売は行いません</div>
+            <div className="flex items-center gap-2"><span className="text-green-500">✓</span>警察・行政機関への通報支援が目的の公益サービスです</div>
+          </div>
+        </div>
+
+        {/* 実態データ */}
+        <div className="flex gap-3 justify-center flex-wrap">
           {[
             { n: "50人超", label: "2024年以降の逮捕者数" },
-            { n: "26億円", label: "2025年広島県だけの被害額" },
+            { n: "26億円", label: "2025年広島県の被害額" },
             { n: "10代の3割", label: "闇バイト募集を見たことがある" },
           ].map(({ n, label }) => (
-            <div key={n} className="bg-white border border-gray-200 rounded-xl px-5 py-3 shadow-sm text-center">
-              <div className="text-xl font-black text-red-500">{n}</div>
-              <div className="text-xs text-gray-400 mt-1">{label}</div>
+            <div key={n} className="bg-white border border-gray-100 rounded-xl px-4 py-2 shadow-sm text-center">
+              <div className="text-lg font-black text-red-500">{n}</div>
+              <div className="text-xs text-gray-400 mt-0.5">{label}</div>
             </div>
           ))}
         </div>
-        <div className="flex gap-3 justify-center flex-wrap">
-          <button
-            onClick={() => scrollTo("checker")}
-            className="bg-red-500 hover:bg-red-600 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-red-200"
-          >
-            今すぐ無料で危険度チェック →
-          </button>
-          <button
-            onClick={() => scrollTo("report")}
-            className="bg-white hover:bg-red-50 text-red-500 font-bold px-8 py-4 rounded-xl text-lg border-2 border-red-200 transition-colors"
-          >
-            🚨 怪しい投稿を通報する
-          </button>
-        </div>
-        <p className="text-xs text-gray-400 mt-4">入力した文章はサーバーに保存されません</p>
       </div>
     </section>
   );
@@ -826,6 +872,26 @@ function JobsSection() {
           </div>
         </div>
 
+        {/* 安全な求人の見分け方 */}
+        <div className="mt-8 bg-green-50 border-2 border-green-100 rounded-2xl p-6">
+          <div className="text-sm font-bold text-gray-700 mb-4">✅ 安全な求人を見分ける3つの基準</div>
+          <div className="flex flex-col gap-3">
+            {[
+              { icon: "🏢", title: "運営元が明確", desc: "会社名・住所・電話番号が公開されている。上場企業や大手プラットフォーム掲載の求人はリスクが低い。" },
+              { icon: "📋", title: "面接・登録手続きがある", desc: "身元確認・面接なしで即日高収入を謳う求人は危険。正規の仕事は必ず採用プロセスがある。" },
+              { icon: "💳", title: "給与が振込またはアプリ払い", desc: "現金手渡し・暗号資産・ギフト券払いは詐欺の証拠。正規の会社は銀行振込で給与を支払う。" },
+            ].map(({ icon, title, desc }) => (
+              <div key={title} className="flex gap-3 items-start">
+                <span className="text-xl flex-shrink-0">{icon}</span>
+                <div>
+                  <div className="text-sm font-bold text-gray-800 mb-0.5">{title}</div>
+                  <div className="text-xs text-gray-500 leading-relaxed">{desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <p className="text-xs text-gray-400 text-center mt-4">
           ※ 掲載求人は安全性を考慮した案件のみです。実際の応募は各求人サイトにてご確認ください。
         </p>
@@ -946,6 +1012,41 @@ function Footer() {
 // ROOT
 // ============================================================
 
+function AboutSection() {
+  return (
+    <section className="py-16 px-4 bg-white border-t border-gray-100">
+      <div className="max-w-2xl mx-auto text-center">
+        <div className="inline-block bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full mb-6 tracking-wider">
+          このサービスについて
+        </div>
+        <h2 className="text-2xl font-black text-gray-900 mb-5">
+          「知らなかった」で人生を<br />棒に振ってほしくない
+        </h2>
+        <p className="text-gray-500 text-sm leading-loose mb-6 text-left max-w-lg mx-auto">
+          SafeBiteは、闇バイト撲滅を目的とした<strong className="text-gray-700">公益・非営利のWebサービス</strong>です。<br /><br />
+          「手っ取り早く稼ぎたい」という気持ちは、決して悪いことではありません。
+          しかし、その気持ちにつけ込む犯罪組織が存在します。<br /><br />
+          一度関与してしまうと、脅迫・逮捕・前科という取り返しのつかない結果を招きます。
+          このサービスは、そうした悪の連鎖に介入するために作られました。
+          入力された情報は一切保存されず、広告目的での利用も行いません。
+        </p>
+        <div className="flex flex-wrap gap-4 justify-center text-sm">
+          {[
+            { icon: "🔒", text: "個人情報の収集なし" },
+            { icon: "🛡️", text: "公益・非営利目的" },
+            { icon: "🤖", text: "AI判定は参考情報" },
+          ].map(({ icon, text }) => (
+            <div key={text} className="flex items-center gap-2 text-gray-600 font-bold">
+              <span>{icon}</span>
+              <span>{text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   return (
     <main>
@@ -956,7 +1057,9 @@ export default function Home() {
       <SOSSection />
       <JobsSection />
       <NewsSection />
+      <AboutSection />
       <Footer />
+      <QuickEscape />
     </main>
   );
 }
