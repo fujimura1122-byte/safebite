@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const YAMI_KEYWORDS = [
   "UD", "ホワイト案件", "受け子", "出し子", "叩き", "飛ばし", "名義貸し",
@@ -27,14 +27,14 @@ const REPORT_TARGETS = [
   {
     name: "X（Twitter）公式通報フォーム",
     desc: "X上の違法コンテンツを通報。「詐欺・不正」カテゴリを選択",
-    url: "https://help.twitter.com/forms/inaccessible",
+    url: "https://help.x.com/ja/rules-and-policies/x-report-violation",
     color: "gray",
     tag: "X専用",
   },
   {
     name: "総務省 違法・有害情報相談センター",
     desc: "SNS投稿の削除申請・相談窓口",
-    url: "https://ihcenter.jp/",
+    url: "https://ihaho.jp/",
     color: "purple",
     tag: "削除申請",
   },
@@ -69,6 +69,12 @@ function NavBar() {
               {n.label}
             </button>
           ))}
+          <a
+            href="/glossary"
+            className="px-3 py-1.5 rounded-lg text-gray-500 hover:text-red-500 hover:bg-red-50 transition-colors"
+          >
+            隠語辞典
+          </a>
         </div>
       </div>
     </nav>
@@ -719,16 +725,52 @@ function SOSSection() {
 
 function JobsSection() {
   const jobs = [
-    { title: "引越し・軽作業スタッフ", pay: "時給1,500〜2,000円",     style: "日払いOK・週1〜",         tag: "体力系" },
-    { title: "フードデリバリー",        pay: "時給換算1,200〜2,500円", style: "完全フレックス・即日振込", tag: "配達"   },
-    { title: "コールセンター（受信）",  pay: "時給1,300〜1,800円",     style: "シフト自由・研修あり",     tag: "在宅可" },
-    { title: "イベントスタッフ",        pay: "日給12,000〜18,000円",   style: "単発OK・日払い対応多数",   tag: "単発"   },
-    { title: "工場・倉庫ピッキング",    pay: "時給1,200〜1,600円",     style: "未経験OK・日払いあり",     tag: "安定"   },
-    { title: "飲食店ホールスタッフ",    pay: "時給1,100〜1,500円",     style: "週1〜・シフト融通あり",    tag: "定番"   },
+    {
+      title: "引越し・軽作業スタッフ",
+      pay: "時給1,500〜2,000円",
+      style: "日払いOK・週1〜",
+      tag: "体力系",
+      searchUrl: "https://jp.indeed.com/jobs?q=%E8%BB%BD%E4%BD%9C%E6%A5%AD+%E6%97%A5%E6%89%95%E3%81%84&l=",
+    },
+    {
+      title: "フードデリバリー",
+      pay: "時給換算1,200〜2,500円",
+      style: "完全フレックス・即日振込",
+      tag: "配達",
+      searchUrl: "https://jp.indeed.com/jobs?q=%E3%83%95%E3%83%BC%E3%83%89%E3%83%87%E3%83%AA%E3%83%90%E3%83%AA%E3%83%BC&l=",
+    },
+    {
+      title: "コールセンター（受信）",
+      pay: "時給1,300〜1,800円",
+      style: "シフト自由・研修あり",
+      tag: "在宅可",
+      searchUrl: "https://jp.indeed.com/jobs?q=%E3%82%B3%E3%83%BC%E3%83%AB%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC+%E5%8F%97%E4%BF%A1&l=",
+    },
+    {
+      title: "イベントスタッフ",
+      pay: "日給12,000〜18,000円",
+      style: "単発OK・日払い対応多数",
+      tag: "単発",
+      searchUrl: "https://jp.indeed.com/jobs?q=%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95+%E5%8D%98%E7%99%BA&l=",
+    },
+    {
+      title: "工場・倉庫ピッキング",
+      pay: "時給1,200〜1,600円",
+      style: "未経験OK・日払いあり",
+      tag: "安定",
+      searchUrl: "https://jp.indeed.com/jobs?q=%E3%83%94%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0+%E6%97%A5%E6%89%95%E3%81%84&l=",
+    },
+    {
+      title: "飲食店ホールスタッフ",
+      pay: "時給1,100〜1,500円",
+      style: "週1〜・シフト融通あり",
+      tag: "定番",
+      searchUrl: "https://jp.indeed.com/jobs?q=%E3%83%9B%E3%83%BC%E3%83%AB%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95+%E9%A3%B2%E9%A3%9F&l=",
+    },
   ];
 
   const siteLinks = [
-    { label: "求人ボックス", url: "https://www.jobsearch.ne.jp/" },
+    { label: "求人ボックス", url: "https://xn--pckua2a7gp15o89zb.com/" },
     { label: "Indeed",       url: "https://jp.indeed.com/" },
     { label: "ハローワーク", url: "https://www.hellowork.mhlw.go.jp/" },
   ];
@@ -746,7 +788,7 @@ function JobsSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           {jobs.map((j, i) => (
-            <div key={i} className="bg-white border-2 border-gray-100 hover:border-blue-200 rounded-xl p-5 transition-colors">
+            <div key={i} className="bg-white border-2 border-gray-100 hover:border-blue-200 rounded-xl p-5 transition-colors flex flex-col">
               <div className="flex justify-between items-start mb-2">
                 <span className="font-bold text-gray-800 leading-tight">{j.title}</span>
                 <span className="text-xs font-bold bg-blue-50 text-blue-600 border border-blue-100 rounded-md px-2 py-0.5 ml-2 flex-shrink-0">
@@ -754,7 +796,15 @@ function JobsSection() {
                 </span>
               </div>
               <div className="text-green-600 font-black text-sm mb-1">{j.pay}</div>
-              <div className="text-xs text-gray-400">{j.style}</div>
+              <div className="text-xs text-gray-400 mb-4">{j.style}</div>
+              <a
+                href={j.searchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto text-xs font-bold text-blue-600 hover:text-blue-800 border border-blue-200 hover:border-blue-400 rounded-lg px-3 py-1.5 text-center transition-colors"
+              >
+                求人を探す →
+              </a>
             </div>
           ))}
         </div>
@@ -785,6 +835,92 @@ function JobsSection() {
 }
 
 // ============================================================
+// NEWS
+// ============================================================
+
+type NewsItem = { title: string; link: string; pubDate: string; source: string };
+
+function NewsSection() {
+  const [items, setItems] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/news")
+      .then((r) => r.json())
+      .then((d) => setItems(d.items ?? []))
+      .catch(() => setItems([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const formatDate = (str: string) => {
+    try {
+      return new Date(str).toLocaleDateString("ja-JP", { month: "numeric", day: "numeric" });
+    } catch {
+      return "";
+    }
+  };
+
+  return (
+    <section className="py-16 px-4 bg-gray-50">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-8">
+          <div className="inline-block bg-gray-200 text-gray-600 text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-wider">
+            最近の逮捕事例
+          </div>
+          <h2 className="text-2xl font-black text-gray-900 mb-2">闇バイト関連ニュース</h2>
+          <p className="text-gray-500 text-sm">実際の逮捕事例を知ることが最大の抑止力です</p>
+        </div>
+
+        {loading && (
+          <div className="text-center py-8 text-gray-400">
+            <div className="w-8 h-8 border-4 border-gray-200 border-t-gray-500 rounded-full animate-spin mx-auto mb-3" />
+            ニュースを取得中...
+          </div>
+        )}
+
+        {!loading && items.length === 0 && (
+          <div className="text-center py-8 text-gray-400 text-sm">
+            ニュースを取得できませんでした。
+          </div>
+        )}
+
+        {!loading && items.length > 0 && (
+          <div className="flex flex-col gap-3">
+            {items.map((item, i) => (
+              <a
+                key={i}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white border border-gray-200 hover:border-red-300 rounded-xl p-4 flex gap-4 items-start transition-colors group"
+              >
+                <div className="flex-shrink-0 w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center text-red-500 font-black text-sm">
+                  {i + 1}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-bold text-gray-800 group-hover:text-red-600 leading-snug mb-1 line-clamp-2">
+                    {item.title}
+                  </div>
+                  <div className="flex gap-3 text-xs text-gray-400">
+                    {item.source && <span>{item.source}</span>}
+                    {item.pubDate && <span>{formatDate(item.pubDate)}</span>}
+                  </div>
+                </div>
+                <span className="text-gray-300 group-hover:text-red-400 text-xs flex-shrink-0 self-center">→</span>
+              </a>
+            ))}
+          </div>
+        )}
+
+        <p className="text-xs text-gray-400 text-center mt-4">
+          ※ Google ニュースから自動取得しています
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
 // FOOTER
 // ============================================================
 
@@ -798,6 +934,9 @@ function Footer() {
       SafeBiteは闇バイト撲滅を目的とした公益Webサービスです。<br />
       AI判定は参考情報であり法的根拠を保証しません。<br />
       入力情報はサーバーに保存されません。最終判断は必ず公的機関にご相談ください。<br /><br />
+      <div className="flex gap-4 justify-center mb-3 flex-wrap">
+        <a href="/glossary" className="text-gray-500 hover:text-white transition-colors text-xs">闇バイト隠語辞典</a>
+      </div>
       © 2025 SafeBite Project — すべての人が安全に働ける社会のために
     </footer>
   );
@@ -816,6 +955,7 @@ export default function Home() {
       <ReportHubSection />
       <SOSSection />
       <JobsSection />
+      <NewsSection />
       <Footer />
     </main>
   );
