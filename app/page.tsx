@@ -9,10 +9,44 @@ const YAMI_KEYWORDS = [
   "架け子", "書き子", "受け取り",
 ];
 
+const REPORT_TARGETS = [
+  {
+    name: "インターネット・ホットラインセンター（IHC）",
+    desc: "警察庁委託の公式窓口。闇バイト募集投稿を直接通報できます",
+    url: "https://www.internethotline.jp/",
+    color: "red",
+    tag: "最推奨",
+  },
+  {
+    name: "警察庁サイバー局オンライン受付",
+    desc: "サイバー事案の通報・情報提供の公式窓口",
+    url: "https://proc.npa.go.jp/",
+    color: "blue",
+    tag: "公式",
+  },
+  {
+    name: "X（Twitter）公式通報フォーム",
+    desc: "X上の違法コンテンツを通報。「詐欺・不正」カテゴリを選択",
+    url: "https://help.twitter.com/forms/inaccessible",
+    color: "gray",
+    tag: "X専用",
+  },
+  {
+    name: "総務省 違法・有害情報相談センター",
+    desc: "SNS投稿の削除申請・相談窓口",
+    url: "https://ihcenter.jp/",
+    color: "purple",
+    tag: "削除申請",
+  },
+];
+
+// ============================================================
+// SHARED
+// ============================================================
+
 function NavBar() {
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
@@ -20,10 +54,10 @@ function NavBar() {
           <span className="text-red-500">Safe</span>
           <span className="text-gray-800">Bite</span>
         </div>
-        <div className="flex gap-1 text-xs font-semibold">
+        <div className="flex gap-1 text-xs font-semibold flex-wrap justify-end">
           {[
             { id: "checker", label: "危険度チェック" },
-            { id: "simulator", label: "リスク確認" },
+            { id: "report", label: "🚨 通報ハブ" },
             { id: "sos", label: "SOS" },
             { id: "jobs", label: "安全な求人" },
           ].map((n) => (
@@ -41,10 +75,13 @@ function NavBar() {
   );
 }
 
+// ============================================================
+// HERO
+// ============================================================
+
 function HeroSection() {
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-4 pt-14 bg-gradient-to-b from-red-50 to-white">
       <div className="max-w-2xl mx-auto text-center">
@@ -79,10 +116,10 @@ function HeroSection() {
             今すぐ無料で危険度チェック →
           </button>
           <button
-            onClick={() => scrollTo("sos")}
-            className="bg-white hover:bg-gray-50 text-gray-700 font-bold px-8 py-4 rounded-xl text-lg border border-gray-200 transition-colors"
+            onClick={() => scrollTo("report")}
+            className="bg-white hover:bg-red-50 text-red-500 font-bold px-8 py-4 rounded-xl text-lg border-2 border-red-200 transition-colors"
           >
-            SOS はこちら
+            🚨 怪しい投稿を通報する
           </button>
         </div>
         <p className="text-xs text-gray-400 mt-4">入力した文章はサーバーに保存されません</p>
@@ -90,6 +127,10 @@ function HeroSection() {
     </section>
   );
 }
+
+// ============================================================
+// AI CHECKER
+// ============================================================
 
 function CheckerSection() {
   const [text, setText] = useState("");
@@ -125,14 +166,9 @@ function CheckerSection() {
     }
   };
 
-  const scoreColor =
-    !result ? "gray"
-    : result.score >= 70 ? "red"
-    : result.score >= 40 ? "amber"
-    : "green";
-
+  const scoreColor = !result ? "gray" : result.score >= 70 ? "red" : result.score >= 40 ? "amber" : "green";
   const colorMap: Record<string, { bg: string; border: string; text: string; badge: string }> = {
-    red:   { bg: "bg-red-50",   border: "border-red-200",   text: "text-red-600",   badge: "bg-red-100 text-red-600"   },
+    red:   { bg: "bg-red-50",   border: "border-red-200",   text: "text-red-600",   badge: "bg-red-100 text-red-600"    },
     amber: { bg: "bg-amber-50", border: "border-amber-200", text: "text-amber-600", badge: "bg-amber-100 text-amber-600" },
     green: { bg: "bg-green-50", border: "border-green-200", text: "text-green-600", badge: "bg-green-100 text-green-600" },
     gray:  { bg: "bg-gray-50",  border: "border-gray-200",  text: "text-gray-600",  badge: "bg-gray-100 text-gray-600"  },
@@ -143,7 +179,6 @@ function CheckerSection() {
     "(" + YAMI_KEYWORDS.map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")",
     "gi"
   );
-
   const highlighted = text
     ? text.split(regex).map((part, i) =>
         YAMI_KEYWORDS.some((k) => k.toLowerCase() === part.toLowerCase()) ? (
@@ -197,7 +232,6 @@ function CheckerSection() {
             AIが解析中...
           </div>
         )}
-
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-600 text-sm">{error}</div>
         )}
@@ -242,10 +276,10 @@ function CheckerSection() {
               </div>
               {result.should_report && (
                 <button
-                  onClick={() => document.getElementById("sos")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={() => document.getElementById("report")?.scrollIntoView({ behavior: "smooth" })}
                   className="mt-3 w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition-colors"
                 >
-                  今すぐSOSページへ →
+                  🚨 この投稿を警察庁・IHCへ通報する →
                 </button>
               )}
             </div>
@@ -260,6 +294,287 @@ function CheckerSection() {
     </section>
   );
 }
+
+// ============================================================
+// REPORT HUB（通報ハブ）
+// ============================================================
+
+function ReportHubSection() {
+  const [platform, setPlatform] = useState("X（Twitter）");
+  const [url, setUrl] = useState("");
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<{
+    is_illegal: boolean;
+    category: string;
+    ihc_report_text: string;
+    police_report_text: string;
+    evidence_checklist: string[];
+    urgency: string;
+  } | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const platforms = ["X（Twitter）", "Instagram", "TikTok", "LINE", "Telegram", "その他"];
+
+  const tagColors: Record<string, string> = {
+    red:    "bg-red-100 text-red-600 border-red-200",
+    blue:   "bg-blue-100 text-blue-600 border-blue-200",
+    gray:   "bg-gray-100 text-gray-600 border-gray-200",
+    purple: "bg-purple-100 text-purple-600 border-purple-200",
+  };
+
+  const generate = async () => {
+    if (!text.trim() || loading) return;
+    setLoading(true);
+    setResult(null);
+    try {
+      const res = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: "プラットフォーム：" + platform + "\nURL：" + (url || "不明") + "\n投稿内容：\n" + text,
+          type: "report",
+        }),
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      setResult(data);
+    } catch {
+      // silent
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <section id="report" className="py-20 px-4 bg-red-50">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-10">
+          <div className="inline-block bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-wider">
+            機能② 市民通報ハブ
+          </div>
+          <h2 className="text-3xl font-black text-gray-900 mb-3">
+            大元を警察庁・IHCへ直接通報
+          </h2>
+          <p className="text-gray-500 leading-relaxed">
+            怪しい投稿を貼るだけで、AIが通報文を自動生成します<br />
+            <strong className="text-gray-700">警察庁・IHC・各プラットフォームへの提出を誘導</strong>します
+          </p>
+        </div>
+
+        {/* 通報先カード */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+          {REPORT_TARGETS.map((t) => (
+            <a
+              key={t.name}
+              href={t.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white border-2 border-gray-100 hover:border-red-200 rounded-xl p-4 transition-colors block"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <span className="text-sm font-bold text-gray-800 leading-tight pr-2">{t.name}</span>
+                <span className={"text-xs font-bold px-2 py-0.5 rounded border flex-shrink-0 " + tagColors[t.color]}>
+                  {t.tag}
+                </span>
+              </div>
+              <p className="text-xs text-gray-400 leading-relaxed mb-2">{t.desc}</p>
+              <span className="text-xs font-bold text-red-500">通報ページを開く →</span>
+            </a>
+          ))}
+        </div>
+
+        {/* AI通報文生成 */}
+        <div className="bg-white border-2 border-red-100 rounded-2xl overflow-hidden mb-6">
+          <div className="p-5 border-b border-gray-100 bg-red-50">
+            <div className="font-bold text-gray-800 mb-1">🤖 AI通報文ジェネレーター</div>
+            <div className="text-xs text-gray-500">
+              投稿内容を貼り付けると、IHC・警察庁に提出できる通報文をAIが自動生成します
+            </div>
+          </div>
+
+          <div className="p-5 flex flex-col gap-4">
+            {/* Platform */}
+            <div>
+              <div className="text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider">発見したプラットフォーム</div>
+              <div className="flex flex-wrap gap-2">
+                {platforms.map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => setPlatform(p)}
+                    className={"px-3 py-1.5 rounded-lg text-xs font-bold border-2 transition-colors " +
+                      (platform === p
+                        ? "bg-red-500 text-white border-red-500"
+                        : "bg-white text-gray-500 border-gray-200 hover:border-red-200")}
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* URL */}
+            <div>
+              <div className="text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider">投稿URL（任意）</div>
+              <input
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://x.com/..."
+                className="w-full border-2 border-gray-200 focus:border-red-400 rounded-xl p-3 text-sm text-gray-700 outline-none"
+              />
+            </div>
+
+            {/* Text */}
+            <div>
+              <div className="text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider">投稿内容・DMテキスト（必須）</div>
+              <textarea
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="怪しいと感じた投稿・DMの内容をそのまま貼り付けてください"
+                rows={5}
+                className="w-full border-2 border-gray-200 focus:border-red-400 rounded-xl p-3 text-sm text-gray-700 leading-relaxed resize-none outline-none"
+              />
+            </div>
+
+            <button
+              onClick={generate}
+              disabled={!text.trim() || loading}
+              className="bg-red-500 hover:bg-red-600 disabled:bg-gray-200 disabled:text-gray-400 text-white font-bold py-3 rounded-xl transition-colors"
+            >
+              {loading ? "通報文を生成中..." : "通報文をAIで自動生成する"}
+            </button>
+          </div>
+        </div>
+
+        {/* Result */}
+        {result && (
+          <div className="flex flex-col gap-4">
+            {/* 違法判定バナー */}
+            <div className={"rounded-xl p-4 border-2 flex gap-3 items-start " +
+              (result.is_illegal
+                ? "bg-red-50 border-red-200"
+                : "bg-green-50 border-green-200")}>
+              <span className="text-2xl">{result.is_illegal ? "🚨" : "ℹ️"}</span>
+              <div>
+                <div className={"font-bold mb-1 " + (result.is_illegal ? "text-red-600" : "text-green-600")}>
+                  {result.is_illegal
+                    ? "違法情報の可能性あり — 通報を強く推奨します"
+                    : "違法性は低めですが、念のため通報可能です"}
+                </div>
+                <div className="text-xs text-gray-500">
+                  カテゴリ：{result.category}　緊急度：{result.urgency}
+                </div>
+              </div>
+            </div>
+
+            {/* 証拠保全チェックリスト */}
+            <div className="bg-white border-2 border-amber-200 rounded-xl p-4">
+              <div className="text-xs font-bold text-amber-600 uppercase tracking-wider mb-3">
+                📋 通報前に確認すること
+              </div>
+              {result.evidence_checklist && result.evidence_checklist.map((item, i) => (
+                <div key={i} className="flex gap-2 mb-2 text-sm text-gray-700">
+                  <span className="text-green-500 font-bold flex-shrink-0">✓</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* IHC通報文 */}
+            <ReportTextCard
+              title="IHC（インターネット・ホットラインセンター）への通報文"
+              text={result.ihc_report_text}
+              actionLabel="IHCで通報する"
+              actionUrl="https://www.internethotline.jp/"
+              color="red"
+              onSubmit={() => setSubmitted(true)}
+            />
+
+            {/* 警察庁通報文 */}
+            <ReportTextCard
+              title="警察庁オンライン受付への通報文"
+              text={result.police_report_text}
+              actionLabel="警察庁で通報する"
+              actionUrl="https://proc.npa.go.jp/"
+              color="blue"
+              onSubmit={() => setSubmitted(true)}
+            />
+
+            {submitted && (
+              <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4">
+                <div className="font-bold text-green-600 mb-1">✅ 通報手続きを開始しました</div>
+                <div className="text-sm text-gray-500 leading-relaxed">
+                  あなたの行動が闇バイト組織の摘発に貢献します。
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        <p className="text-xs text-gray-400 text-center mt-6 leading-relaxed">
+          ⚠️ 通報内容はSafeBiteサーバーに保存されません。各通報先へ直接ご送付ください。<br />
+          誤った通報は避け、疑わしい場合は「情報提供」として送信することをお勧めします。
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function ReportTextCard({
+  title, text, actionLabel, actionUrl, color, onSubmit,
+}: {
+  title: string;
+  text: string;
+  actionLabel: string;
+  actionUrl: string;
+  color: string;
+  onSubmit: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  const borderColor = color === "red" ? "border-red-200" : "border-blue-200";
+  const textColor = color === "red" ? "text-red-600" : "text-blue-600";
+  const btnColor = color === "red"
+    ? "bg-red-50 text-red-600 border-red-200 hover:bg-red-100"
+    : "bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100";
+
+  return (
+    <div className={"bg-white border-2 rounded-xl overflow-hidden " + borderColor}>
+      <div className={"p-3 border-b flex justify-between items-center " + borderColor}>
+        <span className={"text-xs font-bold " + textColor}>{title}</span>
+        <button
+          onClick={copy}
+          className={"text-xs font-bold px-3 py-1.5 rounded-lg border transition-colors " +
+            (copied ? "bg-green-500 text-white border-green-500" : "bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200")}
+        >
+          {copied ? "コピー完了 ✓" : "コピー"}
+        </button>
+      </div>
+      <div className="p-4 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap border-b border-gray-100">
+        {text}
+      </div>
+      <div className="p-3">
+        <a
+          href={actionUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onSubmit}
+          className={"inline-block border font-bold px-4 py-2 rounded-lg text-sm transition-colors " + btnColor}
+        >
+          {actionLabel} →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// SOS
+// ============================================================
 
 function SOSSection() {
   const [step, setStep] = useState(0);
@@ -351,9 +666,7 @@ function SOSSection() {
               </div>
             </div>
             <div className="p-5">
-              <label className="block text-base font-bold text-gray-800 mb-3">
-                {fields[step].label}
-              </label>
+              <label className="block text-base font-bold text-gray-800 mb-3">{fields[step].label}</label>
               <textarea
                 value={form[fields[step].key as keyof typeof form]}
                 onChange={(e) => setForm({ ...form, [fields[step].key]: e.target.value })}
@@ -386,7 +699,8 @@ function SOSSection() {
               <span className="text-sm font-bold text-green-600">相談テンプレが完成しました</span>
               <button
                 onClick={copy}
-                className={"text-xs font-bold px-4 py-2 rounded-lg transition-colors " + (copied ? "bg-green-500 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200")}
+                className={"text-xs font-bold px-4 py-2 rounded-lg transition-colors " +
+                  (copied ? "bg-green-500 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200")}
               >
                 {copied ? "コピー完了" : "コピー"}
               </button>
@@ -398,6 +712,10 @@ function SOSSection() {
     </section>
   );
 }
+
+// ============================================================
+// JOBS
+// ============================================================
 
 function JobsSection() {
   const jobs = [
@@ -466,6 +784,10 @@ function JobsSection() {
   );
 }
 
+// ============================================================
+// FOOTER
+// ============================================================
+
 function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-400 py-12 px-4 text-center text-sm leading-relaxed">
@@ -481,12 +803,17 @@ function Footer() {
   );
 }
 
+// ============================================================
+// ROOT
+// ============================================================
+
 export default function Home() {
   return (
     <main>
       <NavBar />
       <HeroSection />
       <CheckerSection />
+      <ReportHubSection />
       <SOSSection />
       <JobsSection />
       <Footer />
