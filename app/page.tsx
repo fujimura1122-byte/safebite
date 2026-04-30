@@ -45,10 +45,15 @@ const REPORT_TARGETS = [
 // ============================================================
 
 const SHARE_URL = "https://safebite-zeta.vercel.app";
-const VC_ARUBAITO_EX_URL = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3769365&pid=892604584";
-const VC_ARUBAITO_EX_PIXEL = "https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3769365&pid=892604584";
-const VC_SHIGOTOIN_URL = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3769365&pid=892604585";
-const VC_SHIGOTOIN_PIXEL = "https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3769365&pid=892604585";
+// ValueCommerce affiliate links（提携承認後に下記をコメントアウト解除してDIRECT_を削除）
+// const VC_ARUBAITO_EX_URL = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3769365&pid=892604584";
+// const VC_ARUBAITO_EX_PIXEL = "https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3769365&pid=892604584";
+// const VC_SHIGOTOIN_URL = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3769365&pid=892604585";
+// const VC_SHIGOTOIN_PIXEL = "https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3769365&pid=892604585";
+const VC_ARUBAITO_EX_URL = "https://arubaito-ex.jp/";
+const VC_ARUBAITO_EX_PIXEL = "";
+const VC_SHIGOTOIN_URL = "https://shigotoin.com/";
+const VC_SHIGOTOIN_PIXEL = "";
 const SHARE_TEXT = "【無料】そのバイト、大丈夫？AIが求人文をコピペするだけで闇バイトを即判定。通報支援・SOS相談テンプレも。";
 
 function ShareButtons({ compact = false }: { compact?: boolean }) {
@@ -831,8 +836,7 @@ function JobsSection() {
           rel="nofollow noopener noreferrer"
           className="flex items-center justify-between bg-blue-600 hover:bg-blue-500 rounded-2xl p-5 mb-6 transition-all group"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={VC_ARUBAITO_EX_PIXEL} height={1} width={1} alt="" style={{ display: "none" }} />
+          {VC_ARUBAITO_EX_PIXEL && <img src={VC_ARUBAITO_EX_PIXEL} height={1} width={1} alt="" style={{ display: "none" }} />}
           <div>
             <div className="text-xs font-bold text-blue-200 uppercase tracking-widest mb-1">有名バイトメディア20社を一括比較</div>
             <div className="text-lg font-black text-white">アルバイトEXで安全な求人を探す</div>
@@ -889,8 +893,7 @@ function JobsSection() {
           rel="nofollow noopener noreferrer"
           className="flex items-center justify-between bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-2xl p-5 mb-6 transition-all group"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={VC_SHIGOTOIN_PIXEL} height={1} width={1} alt="" style={{ display: "none" }} />
+          {VC_SHIGOTOIN_PIXEL && <img src={VC_SHIGOTOIN_PIXEL} height={1} width={1} alt="" style={{ display: "none" }} />}
           <div>
             <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">バイト・パート・転職を一括検索</div>
             <div className="text-base font-black text-slate-800">シゴトinで求人を探す</div>
