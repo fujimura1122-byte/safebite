@@ -44,6 +44,72 @@ const REPORT_TARGETS = [
 // NAV
 // ============================================================
 
+const SHARE_URL = "https://safebite-zeta.vercel.app";
+const SHARE_TEXT = "【無料】そのバイト、大丈夫？AIが求人文をコピペするだけで闇バイトを即判定。通報支援・SOS相談テンプレも。";
+
+function ShareButtons({ compact = false }: { compact?: boolean }) {
+  const xUrl =
+    "https://x.com/intent/tweet?text=" +
+    encodeURIComponent(SHARE_TEXT) +
+    "&url=" +
+    encodeURIComponent(SHARE_URL);
+  const lineUrl =
+    "https://social-plugins.line.me/lineit/share?url=" +
+    encodeURIComponent(SHARE_URL) +
+    "&text=" +
+    encodeURIComponent(SHARE_TEXT);
+
+  if (compact) {
+    return (
+      <div className="flex items-center gap-1.5">
+        <a
+          href={xUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 bg-white/8 hover:bg-white/15 border border-white/10 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition-all"
+        >
+          𝕏 シェア
+        </a>
+        <a
+          href={lineUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 bg-[#06C755]/15 hover:bg-[#06C755]/25 border border-[#06C755]/30 text-[#06C755] font-bold px-3 py-1.5 rounded-lg text-xs transition-all"
+        >
+          LINE
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      <p className="text-sm font-bold text-slate-300">
+        身近な人に教えてください — あなたのシェアが1人を救うかもしれません
+      </p>
+      <div className="flex gap-3 flex-wrap">
+        <a
+          href={xUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 bg-white text-slate-900 hover:bg-slate-100 font-black px-5 py-3 rounded-xl text-sm transition-all"
+        >
+          𝕏 Xでシェアする
+        </a>
+        <a
+          href={lineUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34b] text-white font-black px-5 py-3 rounded-xl text-sm transition-all"
+        >
+          <span className="text-base leading-none">💬</span>
+          LINEで友達に教える
+        </a>
+      </div>
+    </div>
+  );
+}
+
 function NavBar() {
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -75,6 +141,9 @@ function NavBar() {
           >
             隠語辞典
           </a>
+          <div className="ml-2 hidden sm:flex">
+            <ShareButtons compact />
+          </div>
         </div>
       </div>
     </nav>
@@ -936,19 +1005,28 @@ function AboutSection() {
 
 function Footer() {
   return (
-    <footer className="bg-slate-950 text-slate-500 py-12 px-4 text-center text-xs leading-relaxed">
-      <div className="font-black text-base mb-3">
-        <span className="text-red-500">Safe</span>
-        <span className="text-white">Bite</span>
+    <footer className="bg-slate-950 text-slate-500 py-12 px-4 text-xs leading-relaxed">
+      <div className="max-w-2xl mx-auto">
+        {/* シェアCTA */}
+        <div className="bg-white/5 border border-white/8 rounded-2xl p-6 mb-10">
+          <ShareButtons />
+        </div>
+
+        <div className="text-center">
+          <div className="font-black text-base mb-3">
+            <span className="text-red-500">Safe</span>
+            <span className="text-white">Bite</span>
+          </div>
+          <div className="flex gap-4 justify-center mb-4 flex-wrap">
+            <a href="/glossary" className="hover:text-slate-300 transition-colors">闇バイト隠語辞典</a>
+          </div>
+          <p className="text-slate-600 leading-relaxed">
+            SafeBiteは闇バイト撲滅を目的とした公益Webサービスです。<br />
+            AI判定は参考情報であり法的根拠を保証しません。入力情報はサーバーに保存されません。<br /><br />
+            © 2025 SafeBite Project — すべての人が安全に働ける社会のために
+          </p>
+        </div>
       </div>
-      <div className="flex gap-4 justify-center mb-4 flex-wrap">
-        <a href="/glossary" className="hover:text-slate-300 transition-colors">闇バイト隠語辞典</a>
-      </div>
-      <p className="text-slate-600 leading-relaxed">
-        SafeBiteは闇バイト撲滅を目的とした公益Webサービスです。<br />
-        AI判定は参考情報であり法的根拠を保証しません。入力情報はサーバーに保存されません。<br /><br />
-        © 2025 SafeBite Project — すべての人が安全に働ける社会のために
-      </p>
     </footer>
   );
 }
