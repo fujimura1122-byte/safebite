@@ -511,6 +511,40 @@ function ReportHubSection() {
   } | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
+  // X URL自動取得
+  const [tweetUrl, setTweetUrl] = useState("");
+  const [fetching, setFetching] = useState(false);
+  const [fetchError, setFetchError] = useState("");
+  const [fetchedAuthor, setFetchedAuthor] = useState("");
+
+  const fetchTweet = async () => {
+    if (!tweetUrl.trim() || fetching) return;
+    setFetching(true);
+    setFetchError("");
+    setFetchedAuthor("");
+    try {
+      const res = await fetch("/api/fetch-tweet", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: tweetUrl }),
+      });
+      const data = await res.json();
+      if (data.error) {
+        setFetchError(data.error);
+      } else {
+        setPlatform("X（Twitter）");
+        setUrl(tweetUrl);
+        setText(data.text);
+        setFetchedAuthor(data.author);
+        setResult(null);
+      }
+    } catch {
+      setFetchError("取得中にエラーが発生しました");
+    } finally {
+      setFetching(false);
+    }
+  };
+
   const platforms = ["X（Twitter）", "Instagram", "TikTok", "LINE", "Telegram", "その他"];
 
   const generate = async () => {
@@ -560,6 +594,43 @@ function ReportHubSection() {
               <span className="text-xs font-bold text-slate-500 group-hover:text-slate-300 transition-colors">通報ページを開く →</span>
             </a>
           ))}
+        </div>
+
+        {/* X URL自動取得 */}
+        <div className="bg-white/5 border border-blue-500/25 rounded-2xl overflow-hidden mb-4">
+          <div className="p-5 border-b border-white/8">
+            <div className="font-bold text-white mb-1 text-sm">🔗 X(Twitter)投稿URLから自動取得</div>
+            <div className="text-xs text-slate-400">
+              怪しい投稿のURLを貼り付けるだけで、投稿内容を自動で読み込みます
+            </div>
+          </div>
+          <div className="p-5">
+            <div className="flex gap-2 mb-3">
+              <input
+                value={tweetUrl}
+                onChange={(e) => setTweetUrl(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && fetchTweet()}
+                placeholder="https://x.com/xxx/status/123..."
+                className="flex-1 bg-white/5 border border-white/15 focus:border-blue-400/50 rounded-xl p-3 text-sm text-white outline-none placeholder:text-slate-600 transition-all"
+              />
+              <button
+                onClick={fetchTweet}
+                disabled={!tweetUrl.trim() || fetching}
+                className="bg-blue-600 hover:bg-blue-500 disabled:bg-white/10 disabled:text-slate-500 text-white font-bold px-5 py-3 rounded-xl transition-all text-sm whitespace-nowrap"
+              >
+                {fetching ? "取得中…" : "取得する"}
+              </button>
+            </div>
+            {fetchError && (
+              <p className="text-xs text-red-400">{fetchError}</p>
+            )}
+            {fetchedAuthor && !fetchError && (
+              <div className="flex items-center gap-2 text-xs text-emerald-400 font-bold">
+                <span>✓</span>
+                <span>@{fetchedAuthor} の投稿を取得しました。下の通報文生成ボタンを押してください。</span>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* AI通報文生成 */}
