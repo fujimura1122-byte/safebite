@@ -45,6 +45,8 @@ const REPORT_TARGETS = [
 // ============================================================
 
 const SHARE_URL = "https://safebite-zeta.vercel.app";
+const VC_ARUBAITO_EX_URL = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3769365&pid=892604584";
+const VC_ARUBAITO_EX_PIXEL = "https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3769365&pid=892604584";
 const SHARE_TEXT = "【無料】そのバイト、大丈夫？AIが求人文をコピペするだけで闇バイトを即判定。通報支援・SOS相談テンプレも。";
 
 function ShareButtons({ compact = false }: { compact?: boolean }) {
@@ -803,18 +805,12 @@ function SOSSection() {
 
 function JobsSection() {
   const jobs = [
-    { title: "引越し・軽作業スタッフ", pay: "時給1,500〜2,000円",     style: "日払いOK・週1〜",         tag: "体力系", searchUrl: "https://jp.indeed.com/jobs?q=%E8%BB%BD%E4%BD%9C%E6%A5%AD+%E6%97%A5%E6%89%95%E3%81%84" },
-    { title: "フードデリバリー",        pay: "時給換算1,200〜2,500円", style: "完全フレックス・即日振込", tag: "配達",   searchUrl: "https://jp.indeed.com/jobs?q=%E3%83%95%E3%83%BC%E3%83%89%E3%83%87%E3%83%AA%E3%83%90%E3%83%AA%E3%83%BC" },
-    { title: "コールセンター（受信）",  pay: "時給1,300〜1,800円",     style: "シフト自由・研修あり",     tag: "在宅可", searchUrl: "https://jp.indeed.com/jobs?q=%E3%82%B3%E3%83%BC%E3%83%AB%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC+%E5%8F%97%E4%BF%A1" },
-    { title: "イベントスタッフ",        pay: "日給12,000〜18,000円",   style: "単発OK・日払い対応多数",   tag: "単発",   searchUrl: "https://jp.indeed.com/jobs?q=%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95+%E5%8D%98%E7%99%BA" },
-    { title: "工場・倉庫ピッキング",    pay: "時給1,200〜1,600円",     style: "未経験OK・日払いあり",     tag: "安定",   searchUrl: "https://jp.indeed.com/jobs?q=%E3%83%94%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0+%E6%97%A5%E6%89%95%E3%81%84" },
-    { title: "飲食店ホールスタッフ",    pay: "時給1,100〜1,500円",     style: "週1〜・シフト融通あり",    tag: "定番",   searchUrl: "https://jp.indeed.com/jobs?q=%E3%83%9B%E3%83%BC%E3%83%AB%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95+%E9%A3%B2%E9%A3%9F" },
-  ];
-
-  const siteLinks = [
-    { label: "求人ボックス", url: "https://xn--pckua2a7gp15o89zb.com/" },
-    { label: "Indeed",       url: "https://jp.indeed.com/" },
-    { label: "ハローワーク", url: "https://www.hellowork.mhlw.go.jp/" },
+    { title: "引越し・軽作業スタッフ", pay: "時給1,500〜2,000円",     style: "日払いOK・週1〜",         tag: "体力系" },
+    { title: "フードデリバリー",        pay: "時給換算1,200〜2,500円", style: "完全フレックス・即日振込", tag: "配達"   },
+    { title: "コールセンター（受信）",  pay: "時給1,300〜1,800円",     style: "シフト自由・研修あり",     tag: "在宅可" },
+    { title: "イベントスタッフ",        pay: "日給12,000〜18,000円",   style: "単発OK・日払い対応多数",   tag: "単発"   },
+    { title: "工場・倉庫ピッキング",    pay: "時給1,200〜1,600円",     style: "未経験OK・日払いあり",     tag: "安定"   },
+    { title: "飲食店ホールスタッフ",    pay: "時給1,100〜1,500円",     style: "週1〜・シフト融通あり",    tag: "定番"   },
   ];
 
   return (
@@ -826,6 +822,23 @@ function JobsSection() {
           <p className="text-slate-500 text-sm">日払い・即日スタート可能な安全な求人をご紹介</p>
         </div>
 
+        {/* アルバイトEX メインCTA */}
+        <a
+          href={VC_ARUBAITO_EX_URL}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          className="flex items-center justify-between bg-blue-600 hover:bg-blue-500 rounded-2xl p-5 mb-6 transition-all group"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={VC_ARUBAITO_EX_PIXEL} height={1} width={1} alt="" style={{ display: "none" }} />
+          <div>
+            <div className="text-xs font-bold text-blue-200 uppercase tracking-widest mb-1">有名バイトメディア20社を一括比較</div>
+            <div className="text-lg font-black text-white">アルバイトEXで安全な求人を探す</div>
+            <div className="text-xs text-blue-200 mt-1">マッハバイト・タウンワーク・シフトワークスなど180万件以上</div>
+          </div>
+          <span className="text-white text-2xl group-hover:translate-x-1 transition-transform">→</span>
+        </a>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
           {jobs.map((j, i) => (
             <div key={i} className="bg-slate-50 hover:bg-white border border-slate-100 hover:border-slate-200 hover:shadow-sm rounded-2xl p-5 transition-all flex flex-col">
@@ -836,9 +849,9 @@ function JobsSection() {
               <div className="text-emerald-600 font-black text-sm mb-1">{j.pay}</div>
               <div className="text-xs text-slate-400 mb-4">{j.style}</div>
               <a
-                href={j.searchUrl}
+                href={VC_ARUBAITO_EX_URL}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="nofollow noopener noreferrer"
                 className="mt-auto text-xs font-bold text-blue-600 hover:text-blue-800 border border-blue-100 hover:border-blue-300 bg-blue-50 hover:bg-blue-100 rounded-lg px-3 py-2 text-center transition-all"
               >
                 求人を探す →
@@ -868,9 +881,12 @@ function JobsSection() {
         </div>
 
         <div className="border border-slate-100 rounded-2xl p-6 text-center">
-          <div className="text-sm font-bold text-slate-700 mb-4">もっと多くの安全な求人を探す</div>
+          <div className="text-sm font-bold text-slate-700 mb-4">他の求人サイトでも探す</div>
           <div className="flex gap-3 justify-center flex-wrap">
-            {siteLinks.map((s) => (
+            {[
+              { label: "求人ボックス", url: "https://xn--pckua2a7gp15o89zb.com/", affiliate: false },
+              { label: "ハローワーク", url: "https://www.hellowork.mhlw.go.jp/",  affiliate: false },
+            ].map((s) => (
               <a
                 key={s.label}
                 href={s.url}
@@ -885,7 +901,7 @@ function JobsSection() {
         </div>
 
         <p className="text-xs text-slate-400 text-center mt-4">
-          ※ 掲載求人は安全性を考慮した案件のみです。実際の応募は各求人サイトにてご確認ください。
+          ※ アルバイトEXは有名求人サイト20社を一括検索できる安全なサービスです。
         </p>
       </div>
     </section>
