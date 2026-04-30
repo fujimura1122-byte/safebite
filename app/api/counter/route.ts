@@ -1,21 +1,32 @@
-import { kv } from "@vercel/kv";
+import Redis from "ioredis";
 import { NextResponse } from "next/server";
-
-export const runtime = "edge";
 
 const VALID_KEYS = ["ai_checks", "reports_submitted", "sos_generated"] as const;
 
+let _redis: Redis | null = null;
+function getRedis() {
+  if (!_redis) {
+    _redis = new Redis(process.env.REDIS_URL ?? "redis://localhost:6379", {
+      maxRetriesPerRequest: 1,
+      connectTimeout: 5000,
+      lazyConnect: true,
+    });
+  }
+  return _redis;
+}
+
 export async function GET() {
   try {
+    const redis = getRedis();
     const [checks, reports, sos] = await Promise.all([
-      kv.get<number>("ai_checks"),
-      kv.get<number>("reports_submitted"),
-      kv.get<number>("sos_generated"),
+      redis.get("ai_checks"),
+      redis.get("reports_submitted"),
+      redis.get("sos_generated"),
     ]);
     return NextResponse.json({
-      ai_checks: checks ?? 0,
-      reports_submitted: reports ?? 0,
-      sos_generated: sos ?? 0,
+      ai_checks: Number(checks ?? 0),
+      reports_submitted: Number(reports ?? 0),
+      sos_generated: Number(sos ?? 0),
     });
   } catch {
     return NextResponse.json({ ai_checks: 0, reports_submitted: 0, sos_generated: 0 });
@@ -28,7 +39,8 @@ export async function POST(req: Request) {
     if (!VALID_KEYS.includes(key)) {
       return NextResponse.json({ error: "invalid key" }, { status: 400 });
     }
-    const count = await kv.incr(key);
+    const redis = getRedis();
+    const count = await redis.incr(key);
     return NextResponse.json({ count });
   } catch {
     return NextResponse.json({ error: "failed" }, { status: 500 });
