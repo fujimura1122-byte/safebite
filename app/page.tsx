@@ -45,6 +45,14 @@ const REPORT_TARGETS = [
 // ============================================================
 
 const SHARE_URL = "https://safebite-zeta.vercel.app";
+
+function incCounter(key: "ai_checks" | "reports_submitted" | "sos_generated") {
+  fetch("/api/counter", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ key }),
+  }).catch(() => {});
+}
 // ValueCommerce affiliate links（提携承認後に下記をコメントアウト解除してDIRECT_を削除）
 // const VC_ARUBAITO_EX_URL = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3769365&pid=892604584";
 // const VC_ARUBAITO_EX_PIXEL = "https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3769365&pid=892604584";
@@ -263,8 +271,50 @@ function HeroSection() {
             </div>
           ))}
         </div>
+
+        {/* ライブ実績カウンター */}
+        <ImpactCounter />
       </div>
     </section>
+  );
+}
+
+// ============================================================
+// IMPACT COUNTER
+// ============================================================
+
+function ImpactCounter() {
+  const [counts, setCounts] = useState({ ai_checks: 0, reports_submitted: 0, sos_generated: 0 });
+
+  useEffect(() => {
+    fetch("/api/counter")
+      .then((r) => r.json())
+      .then(setCounts)
+      .catch(() => {});
+  }, []);
+
+  const items = [
+    { value: counts.ai_checks,        label: "AI危険判定",  color: "text-amber-400"  },
+    { value: counts.reports_submitted, label: "通報支援",    color: "text-red-400"    },
+    { value: counts.sos_generated,     label: "SOS相談",    color: "text-emerald-400" },
+  ];
+
+  if (items.every((i) => i.value === 0)) return null;
+
+  return (
+    <div className="mt-6 bg-white/5 border border-white/8 rounded-2xl px-6 py-4">
+      <div className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center mb-3">SafeBite 累計実績</div>
+      <div className="flex justify-around gap-4">
+        {items.map(({ value, label, color }) => (
+          <div key={label} className="text-center">
+            <div className={"text-2xl font-black tabular-nums " + color}>
+              {value.toLocaleString("ja-JP")}
+            </div>
+            <div className="text-xs text-slate-500 mt-0.5">{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -312,6 +362,7 @@ function CheckerSection() {
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setResult(data);
+      incCounter("ai_checks");
     } catch {
       setError("分析中にエラーが発生しました。再度お試しください。");
     } finally {
@@ -663,7 +714,7 @@ function ReportTextCard({
           href={actionUrl}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={onSubmit}
+          onClick={() => { incCounter("reports_submitted"); onSubmit(); }}
           className={"inline-block border font-bold px-4 py-2 rounded-lg text-xs transition-all " + btnColor}
         >
           {actionLabel} →
@@ -711,6 +762,7 @@ function SOSSection() {
       const data = await res.json();
       setTemplate(data.text || "生成エラー。直接#9110へお電話ください。");
       setStep(5);
+      incCounter("sos_generated");
     } catch {
       setTemplate("エラーが発生しました。直接警察（#9110）へお電話ください。");
       setStep(5);
