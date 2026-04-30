@@ -47,6 +47,8 @@ const REPORT_TARGETS = [
 const SHARE_URL = "https://safebite-zeta.vercel.app";
 const VC_ARUBAITO_EX_URL = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3769365&pid=892604584";
 const VC_ARUBAITO_EX_PIXEL = "https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3769365&pid=892604584";
+const VC_SHIGOTOIN_URL = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3769365&pid=892604585";
+const VC_SHIGOTOIN_PIXEL = "https://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3769365&pid=892604585";
 const SHARE_TEXT = "【無料】そのバイト、大丈夫？AIが求人文をコピペするだけで闇バイトを即判定。通報支援・SOS相談テンプレも。";
 
 function ShareButtons({ compact = false }: { compact?: boolean }) {
@@ -880,12 +882,29 @@ function JobsSection() {
           </div>
         </div>
 
+        {/* シゴトin サブCTA */}
+        <a
+          href={VC_SHIGOTOIN_URL}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          className="flex items-center justify-between bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-2xl p-5 mb-6 transition-all group"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={VC_SHIGOTOIN_PIXEL} height={1} width={1} alt="" style={{ display: "none" }} />
+          <div>
+            <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">バイト・パート・転職を一括検索</div>
+            <div className="text-base font-black text-slate-800">シゴトinで求人を探す</div>
+            <div className="text-xs text-slate-400 mt-1">全国100万件以上・カンタン応募</div>
+          </div>
+          <span className="text-slate-400 text-xl group-hover:translate-x-1 transition-transform">→</span>
+        </a>
+
         <div className="border border-slate-100 rounded-2xl p-6 text-center">
           <div className="text-sm font-bold text-slate-700 mb-4">他の求人サイトでも探す</div>
           <div className="flex gap-3 justify-center flex-wrap">
             {[
-              { label: "求人ボックス", url: "https://xn--pckua2a7gp15o89zb.com/", affiliate: false },
-              { label: "ハローワーク", url: "https://www.hellowork.mhlw.go.jp/",  affiliate: false },
+              { label: "求人ボックス", url: "https://xn--pckua2a7gp15o89zb.com/" },
+              { label: "ハローワーク", url: "https://www.hellowork.mhlw.go.jp/"  },
             ].map((s) => (
               <a
                 key={s.label}
@@ -901,7 +920,7 @@ function JobsSection() {
         </div>
 
         <p className="text-xs text-slate-400 text-center mt-4">
-          ※ アルバイトEXは有名求人サイト20社を一括検索できる安全なサービスです。
+          ※ アルバイトEX・シゴトinは安全な大手求人サービスです。
         </p>
       </div>
     </section>
