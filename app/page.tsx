@@ -46,7 +46,7 @@ const REPORT_TARGETS = [
 
 const SHARE_URL = "https://safebite-zeta.vercel.app";
 
-function incCounter(key: "ai_checks" | "reports_submitted" | "sos_generated") {
+function incCounter(key: "ai_checks" | "reports_submitted" | "sos_generated" | "ihc_verified") {
   fetch("/api/counter", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -284,7 +284,7 @@ function HeroSection() {
 // ============================================================
 
 function ImpactCounter() {
-  const [counts, setCounts] = useState({ ai_checks: 0, reports_submitted: 0, sos_generated: 0 });
+  const [counts, setCounts] = useState({ ai_checks: 0, reports_submitted: 0, sos_generated: 0, ihc_verified: 0 });
 
   useEffect(() => {
     fetch("/api/counter")
@@ -293,26 +293,31 @@ function ImpactCounter() {
       .catch(() => {});
   }, []);
 
-  const items = [
-    { value: counts.ai_checks,        label: "AI危険判定",  color: "text-amber-400"  },
-    { value: counts.reports_submitted, label: "通報支援",    color: "text-red-400"    },
-    { value: counts.sos_generated,     label: "SOS相談",    color: "text-emerald-400" },
-  ];
-
-  if (items.every((i) => i.value === 0)) return null;
+  const total = counts.ai_checks + counts.reports_submitted + counts.sos_generated + counts.ihc_verified;
+  if (total === 0) return null;
 
   return (
     <div className="mt-6 bg-white/5 border border-white/8 rounded-2xl px-6 py-4">
       <div className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center mb-3">SafeBite 累計実績</div>
-      <div className="flex justify-around gap-4">
-        {items.map(({ value, label, color }) => (
-          <div key={label} className="text-center">
-            <div className={"text-2xl font-black tabular-nums " + color}>
-              {value.toLocaleString("ja-JP")}
-            </div>
-            <div className="text-xs text-slate-500 mt-0.5">{label}</div>
+      <div className="flex justify-around gap-2 flex-wrap">
+        {counts.ihc_verified > 0 && (
+          <div className="text-center">
+            <div className="text-2xl font-black tabular-nums text-red-400">{counts.ihc_verified.toLocaleString("ja-JP")}</div>
+            <div className="text-xs text-slate-500 mt-0.5">IHC通報確認済み</div>
           </div>
-        ))}
+        )}
+        {counts.ai_checks > 0 && (
+          <div className="text-center">
+            <div className="text-2xl font-black tabular-nums text-amber-400">{counts.ai_checks.toLocaleString("ja-JP")}</div>
+            <div className="text-xs text-slate-500 mt-0.5">AI危険判定</div>
+          </div>
+        )}
+        {counts.sos_generated > 0 && (
+          <div className="text-center">
+            <div className="text-2xl font-black tabular-nums text-emerald-400">{counts.sos_generated.toLocaleString("ja-JP")}</div>
+            <div className="text-xs text-slate-500 mt-0.5">SOS相談</div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -756,11 +761,34 @@ function ReportTextCard({
   title: string; text: string; actionLabel: string; actionUrl: string; accent: string; onSubmit: () => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [refNum, setRefNum] = useState("");
+  const [refRegistered, setRefRegistered] = useState(false);
+  const [refError, setRefError] = useState("");
+
   const copy = () => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const handleOpen = () => {
+    incCounter("reports_submitted");
+    onSubmit();
+    if (accent === "red") setClicked(true); // IHCのみ参照番号入力を表示
+  };
+
+  const registerRef = () => {
+    // 参照番号の形式チェック（XXXXXXXXXX-XXXXX）番号自体は保存しない
+    if (!/^\d{10}-\d{5}$/.test(refNum.trim())) {
+      setRefError("形式が正しくありません（例: 1777579797-01007）");
+      return;
+    }
+    incCounter("ihc_verified");
+    setRefRegistered(true);
+    setRefError("");
+  };
+
   const border = accent === "red" ? "border-red-500/20" : "border-blue-500/20";
   const labelColor = accent === "red" ? "text-red-400" : "text-blue-400";
   const btnColor = accent === "red"
@@ -780,16 +808,44 @@ function ReportTextCard({
         </button>
       </div>
       <div className="p-4 text-sm text-slate-300 leading-relaxed whitespace-pre-wrap border-b border-white/8">{text}</div>
-      <div className="p-3">
+      <div className="p-3 flex flex-col gap-3">
         <a
           href={actionUrl}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => { incCounter("reports_submitted"); onSubmit(); }}
+          onClick={handleOpen}
           className={"inline-block border font-bold px-4 py-2 rounded-lg text-xs transition-all " + btnColor}
         >
           {actionLabel} →
         </a>
+
+        {/* IHC通報後の参照番号登録 */}
+        {clicked && !refRegistered && (
+          <div className="bg-white/5 border border-red-500/15 rounded-xl p-4">
+            <div className="text-xs font-bold text-red-300 mb-2">通報完了しましたか？参照番号を登録してください</div>
+            <div className="text-xs text-slate-400 mb-3">IHC通報後に表示される参照番号を入力すると、SafeBiteの「通報確認済み」実績に追加されます。番号自体は保存されません。</div>
+            <div className="flex gap-2">
+              <input
+                value={refNum}
+                onChange={(e) => setRefNum(e.target.value)}
+                placeholder="例: 1777579797-01007"
+                className="flex-1 bg-white/5 border border-white/15 focus:border-red-400/50 rounded-lg p-2 text-xs text-white outline-none placeholder:text-slate-600 transition-all font-mono"
+              />
+              <button
+                onClick={registerRef}
+                className="bg-red-500 hover:bg-red-400 text-white font-bold px-4 py-2 rounded-lg text-xs transition-all whitespace-nowrap"
+              >
+                登録する
+              </button>
+            </div>
+            {refError && <p className="text-xs text-red-400 mt-2">{refError}</p>}
+          </div>
+        )}
+        {refRegistered && (
+          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3">
+            <div className="text-xs font-bold text-emerald-400">✅ 通報実績を登録しました。ご協力ありがとうございます。</div>
+          </div>
+        )}
       </div>
     </div>
   );

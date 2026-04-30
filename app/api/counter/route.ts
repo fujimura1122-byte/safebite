@@ -1,7 +1,7 @@
 import Redis from "ioredis";
 import { NextResponse } from "next/server";
 
-const VALID_KEYS = ["ai_checks", "reports_submitted", "sos_generated"] as const;
+const VALID_KEYS = ["ai_checks", "reports_submitted", "sos_generated", "ihc_verified"] as const;
 
 let _redis: Redis | null = null;
 function getRedis() {
@@ -18,15 +18,17 @@ function getRedis() {
 export async function GET() {
   try {
     const redis = getRedis();
-    const [checks, reports, sos] = await Promise.all([
+    const [checks, reports, sos, ihc] = await Promise.all([
       redis.get("ai_checks"),
       redis.get("reports_submitted"),
       redis.get("sos_generated"),
+      redis.get("ihc_verified"),
     ]);
     return NextResponse.json({
       ai_checks: Number(checks ?? 0),
       reports_submitted: Number(reports ?? 0),
       sos_generated: Number(sos ?? 0),
+      ihc_verified: Number(ihc ?? 0),
     });
   } catch {
     return NextResponse.json({ ai_checks: 0, reports_submitted: 0, sos_generated: 0 });
