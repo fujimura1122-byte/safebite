@@ -1061,21 +1061,7 @@ function JobsSection() {
           </div>
         </div>
 
-        {/* シゴトin サブCTA */}
-        <a
-          href={VC_SHIGOTOIN_URL}
-          target="_blank"
-          rel="nofollow noopener noreferrer"
-          className="flex items-center justify-between bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-2xl p-5 mb-6 transition-all group"
-        >
-          {VC_SHIGOTOIN_PIXEL && <img src={VC_SHIGOTOIN_PIXEL} height={1} width={1} alt="" style={{ display: "none" }} />}
-          <div>
-            <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">バイト・パート・転職を一括検索</div>
-            <div className="text-base font-black text-slate-800">シゴトinで求人を探す</div>
-            <div className="text-xs text-slate-400 mt-1">サクッと稼ぐ！短期・単発OK</div>
-          </div>
-          <span className="text-slate-400 text-xl group-hover:translate-x-1 transition-transform">→</span>
-        </a>
+        {/* シゴトin: 広告主側サーバーの403問題のため非表示（バリューコマースサポートに問い合わせ中） */}
 
         <div className="border border-slate-100 rounded-2xl p-6 text-center">
           <div className="text-sm font-bold text-slate-700 mb-4">他の求人サイトでも探す</div>
