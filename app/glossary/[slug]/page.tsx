@@ -13,12 +13,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const term = terms.find((t) => t.slug === slug);
   if (!term) return {};
+  const title = term.word + "とは？意味・危険性・罰則を解説 | SafeBite 闇バイト隠語辞典";
+  const description =
+    "「" + term.word + "」（" + term.read + "）の意味：" + term.short + "。" +
+    term.detail.slice(0, 80) + "…。闇バイト隠語辞典 by SafeBite。";
+  const pageUrl = "https://saferbite.org/glossary/" + term.slug;
+
   return {
-    title: term.word + "とは？意味・危険性・罰則を解説 | SafeBite 闇バイト隠語辞典",
-    description:
-      "「" + term.word + "」（" + term.read + "）の意味：" + term.short + "。" + term.detail.slice(0, 80) + "…。闇バイト隠語辞典 by SafeBite。",
-    keywords:
-      term.word + " 意味," + term.word + " 危険," + term.word + " 闇バイト,闇バイト 隠語",
+    title,
+    description,
+    keywords: term.word + " 意味," + term.word + " 危険," + term.word + " 闇バイト,闇バイト 隠語",
+    alternates: { canonical: "/glossary/" + term.slug },
+    openGraph: {
+      title,
+      description,
+      url: pageUrl,
+      siteName: "SafeBite",
+      locale: "ja_JP",
+      type: "article",
+      images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image" as const,
+      title,
+      description,
+      images: ["/opengraph-image"],
+    },
   };
 }
 

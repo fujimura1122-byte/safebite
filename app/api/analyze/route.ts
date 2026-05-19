@@ -1,11 +1,26 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit } from "../../lib/rateLimit";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
 export async function POST(request: NextRequest) {
+  // ── レートリミット: 1IP あたり 10回/分 ──────────────────
+  const ip = (
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    request.headers.get("x-real-ip") ??
+    "unknown"
+  );
+  const allowed = await checkRateLimit(ip, "analyze", 10, 60);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "リクエストが多すぎます。1分後に再試行してください。" },
+      { status: 429 },
+    );
+  }
+
   try {
     const { text, type } = await request.json();
 
