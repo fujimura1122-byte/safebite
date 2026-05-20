@@ -66,9 +66,10 @@ export const TASKS: Task[] = [
   {
     id: 7,
     priority: "P2",
-    status: "todo",
+    status: "done",
     title: "x_broadcast.py の UWP パス問題を恒久対応",
-    detail: "Claude_pzs8sxrjxfjjc というアプリIDをハードコードしている。通常ターミナルから pip 再インストールで根本解決。",
+    detail: "通常 cmd から pip install で C:\\Python314\\Lib\\site-packages に再インストール。UWP ハードコードパスを削除。",
+    completedAt: "2026-05-20",
   },
   {
     id: 8,
@@ -81,16 +82,18 @@ export const TASKS: Task[] = [
   {
     id: 9,
     priority: "P2",
-    status: "todo",
+    status: "done",
     title: "run_broadcast.bat のログファイル名を整備",
-    detail: "task_debug.log → broadcast.log にリネーム。30日ローテーションを追加。",
+    detail: "runner.log（bat制御ログ）と broadcast.log（Python詳細ログ）に分離。PYTHONPATH の競合も解消。",
+    completedAt: "2026-05-20",
   },
   {
     id: 10,
     priority: "P2",
-    status: "todo",
+    status: "done",
     title: "MEMORY.md を最新状態に更新",
-    detail: "自動投稿修正完了・コンポーネント分割・用語集30語の完了を反映。",
+    detail: "自動投稿・Google OAuth・コンポーネント分割・用語集30語・セキュリティヘッダー等を全反映。",
+    completedAt: "2026-05-20",
   },
 
   // ── P3 SEO強化フェーズ（最優先の成長施策）────────────────────
