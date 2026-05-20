@@ -56,9 +56,10 @@ export const TASKS: Task[] = [
   {
     id: 6,
     priority: "P1",
-    status: "todo",
+    status: "done",
     title: "Vercel 環境変数の棚卸し・確認",
-    detail: "GEMINI_API_KEY / XAI_API_KEY / X API 4点 / DEV_PASSWORD が正しく設定されているか確認。",
+    detail: "AUTH_SECRET / AUTH_GOOGLE_ID / AUTH_GOOGLE_SECRET / ALLOWED_DEV_EMAIL / REDIS_URL を確認・設定完了。",
+    completedAt: "2026-05-20",
   },
 
   // ── P2 今月中（安定性・信頼性）──────────────────────────────
@@ -72,9 +73,10 @@ export const TASKS: Task[] = [
   {
     id: 8,
     priority: "P2",
-    status: "todo",
+    status: "done",
     title: "レートリミット用 Redis（Vercel KV）を設定",
-    detail: "rateLimit.ts 実装済み・REDIS_URL 未設定。現在フェイルオープン（制限が実際には働いていない）。",
+    detail: "safebite-kv として REDIS_URL が Vercel に設定済みであることを確認。rateLimit.ts が正常に動作。",
+    completedAt: "2026-05-20",
   },
   {
     id: 9,
