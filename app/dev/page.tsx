@@ -1,5 +1,6 @@
 import { TASKS, PRIORITY_LABELS, STATUS_CONFIG, type Priority } from "./tasks";
 import { terms } from "../glossary/terms";
+import { auth, signOut } from "@/auth";
 
 export const metadata = { title: "Dev Dashboard | SafeBite", robots: "noindex,nofollow" };
 
@@ -50,7 +51,8 @@ const SYSTEM_STATUS = [
   },
 ];
 
-export default function DevDashboard() {
+export default async function DevDashboard() {
+  const session = await auth();
   const done  = TASKS.filter((t) => t.status === "done").length;
   const total = TASKS.length;
   const pct   = Math.round((done / total) * 100);
@@ -72,9 +74,19 @@ export default function DevDashboard() {
           <span className="text-slate-500 text-xs">Dev Dashboard</span>
           <span className="bg-red-900 text-red-300 text-xs px-2 py-0.5 rounded font-bold">PRIVATE</span>
         </div>
-        <span className="text-slate-500 text-xs">
-          {new Date().toLocaleDateString("ja-JP", { year: "numeric", month: "2-digit", day: "2-digit" })}
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="text-slate-500 text-xs hidden sm:block">
+            {session?.user?.email}
+          </span>
+          <span className="text-slate-600 text-xs">
+            {new Date().toLocaleDateString("ja-JP", { year: "numeric", month: "2-digit", day: "2-digit" })}
+          </span>
+          <form action={async () => { "use server"; await signOut({ redirectTo: "/dev/login" }); }}>
+            <button type="submit" className="text-xs text-slate-500 hover:text-red-400 transition-colors px-2 py-1 rounded border border-slate-800 hover:border-red-800">
+              ログアウト
+            </button>
+          </form>
+        </div>
       </header>
 
       <div className="max-w-5xl mx-auto px-4 py-8 space-y-10">
