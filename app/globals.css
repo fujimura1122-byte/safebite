@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+/* サイバーグリッドパターン（ダークセクションに使用） */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* スキャンラインアニメーション（ヒーローのサブタイトル下部などに） */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}

@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "safebite-zeta.vercel.app" }],
+      "destination": "https://saferbite.org/$1",
+      "permanent": true
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { terms } from "./glossary/terms";
 
-const BASE_URL = "https://safebite-zeta.vercel.app";
+const BASE_URL = "https://saferbite.org";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const glossaryPages = terms.map((term) => ({
@@ -19,10 +19,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${BASE_URL}/glossary`,
+      url: `${BASE_URL}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/glossary`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${BASE_URL}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.5,
     },
     ...glossaryPages,
   ];

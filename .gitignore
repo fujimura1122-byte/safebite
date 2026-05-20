@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Broadcastスクリプト関連（APIキーを含むため全体を除外）
+scripts/
+
 # vercel
 .vercel
 
