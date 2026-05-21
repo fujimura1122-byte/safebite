@@ -100,9 +100,10 @@ export const TASKS: Task[] = [
   {
     id: 11,
     priority: "P3",
-    status: "todo",
+    status: "done",
     title: "用語集 30語 → 100語 拡充",
-    detail: "「即日払い 危険」「身分証 送る バイト」「telegram 副業」等の高意図ロングテールキーワードを狙う。",
+    detail: "category/seoTitle/seoDescription フィールド追加。Cat1:募集フレーズ25語 / Cat2:役割隠語25語 / Cat3:手口・ツール50語。カテゴリタブUI・個別SEOメタ最適化も完了。",
+    completedAt: "2026-05-21",
   },
   {
     id: 12,
