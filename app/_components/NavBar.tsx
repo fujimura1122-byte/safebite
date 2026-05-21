@@ -33,6 +33,12 @@ export default function NavBar() {
           >
             隠語辞典
           </a>
+          <a
+            href="/guide/kotowarikata"
+            className="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all"
+          >
+            ガイド
+          </a>
           <div className="ml-2 hidden sm:flex">
             <ShareButtons compact />
           </div>

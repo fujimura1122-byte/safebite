@@ -116,9 +116,10 @@ export const TASKS: Task[] = [
   {
     id: 13,
     priority: "P3",
-    status: "todo",
+    status: "done",
     title: "新コンテンツページ 4本追加",
-    detail: "「闇バイトの断り方」「被害に遭ったらやること」「保護者・学校向けガイド」「逮捕・判決事例まとめ」",
+    detail: "「闇バイトの断り方」「被害に遭ったらやること」「保護者・学校向けガイド」「逮捕・判決事例まとめ」。Article+FAQPage+BreadcrumbList JSON-LD・相談窓口・関連ガイドリンク・サイトマップ反映。",
+    completedAt: "2026-05-21",
   },
 
   // ── P4 自動化拡張（1〜2ヶ月後）──────────────────────────────
