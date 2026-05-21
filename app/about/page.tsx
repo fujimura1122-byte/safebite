@@ -263,7 +263,7 @@ function SiteFooter() {
           <Link href="/privacy" className="hover:text-slate-300 transition-colors">プライバシーポリシー</Link>
           <Link href="/contact" className="hover:text-slate-300 transition-colors">お問い合わせ</Link>
         </div>
-        <p className="text-slate-600">© 2025 SafeBite Project — すべての人が安全に働ける社会のために</p>
+        <p className="text-slate-600">© 2026 SafeBite Project — すべての人が安全に働ける社会のために</p>
       </div>
     </footer>
   );

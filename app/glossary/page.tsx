@@ -68,7 +68,7 @@ export default function GlossaryPage() {
           <span className="text-red-500">Safe</span>
           <span className="text-white">Bite</span>
         </Link>
-        © 2025 SafeBite Project — すべての人が安全に働ける社会のために
+        © 2026 SafeBite Project — すべての人が安全に働ける社会のために
       </footer>
     </div>
   );

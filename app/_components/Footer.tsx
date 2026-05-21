@@ -23,7 +23,7 @@ export default function Footer() {
             SafeBiteは闇バイト撲滅を目的とした公益Webサービスです。<br />
             AI判定は参考情報であり法的根拠を保証しません。入力情報はサーバーに保存されません。
             <br /><br />
-            © 2025 SafeBite Project — すべての人が安全に働ける社会のために
+            © 2026 SafeBite Project — すべての人が安全に働ける社会のために
           </p>
         </div>
       </div>

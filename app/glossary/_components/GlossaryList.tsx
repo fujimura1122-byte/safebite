@@ -6,12 +6,27 @@ import { terms, dangerConfig, categoryConfig } from "../terms";
 
 type CategoryFilter = 0 | 1 | 2 | 3;
 
+// 危険度の表示優先順（extreme が最上位）
+const DANGER_ORDER = { extreme: 0, high: 1, caution: 2 } as const;
+
+function sortedTerms(list: typeof terms) {
+  return [...list].sort((a, b) => {
+    // 1st: 危険度降順
+    const d = DANGER_ORDER[a.danger] - DANGER_ORDER[b.danger];
+    if (d !== 0) return d;
+    // 2nd: カテゴリ昇順（1→2→3）
+    return a.category - b.category;
+  });
+}
+
 export function GlossaryList() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>(0);
 
-  const filtered = activeCategory === 0
+  const baseList = activeCategory === 0
     ? terms
     : terms.filter((t) => t.category === activeCategory);
+
+  const filtered = sortedTerms(baseList);
 
   const counts = {
     0: terms.length,
