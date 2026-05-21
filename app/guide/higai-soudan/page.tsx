@@ -36,7 +36,13 @@ const articleSchema = {
   description:
     "闇バイトに関わってしまった・脅されている場合の緊急対処法と相談窓口。段階別に解説します。",
   url: `${BASE_URL}/guide/higai-soudan`,
-  dateModified: "2026-05-21",
+  dateModified: "2026-05-21T00:00:00+09:00",
+  image: {
+    "@type": "ImageObject",
+    url: `${BASE_URL}/opengraph-image`,
+    width: 1200,
+    height: 630,
+  },
   author: { "@type": "Organization", name: "SafeBite", url: BASE_URL },
   publisher: {
     "@type": "Organization",

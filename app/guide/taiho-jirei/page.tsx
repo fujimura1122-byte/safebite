@@ -36,7 +36,13 @@ const articleSchema = {
   description:
     "闇バイトで逮捕・起訴された実際の事例と判決内容をまとめています。",
   url: `${BASE_URL}/guide/taiho-jirei`,
-  dateModified: "2026-05-21",
+  dateModified: "2026-05-21T00:00:00+09:00",
+  image: {
+    "@type": "ImageObject",
+    url: `${BASE_URL}/opengraph-image`,
+    width: 1200,
+    height: 630,
+  },
   author: { "@type": "Organization", name: "SafeBite", url: BASE_URL },
   publisher: {
     "@type": "Organization",

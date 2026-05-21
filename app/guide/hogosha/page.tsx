@@ -36,7 +36,13 @@ const articleSchema = {
   description:
     "SNSで広がる闇バイト募集から子どもを守るための知識と対策を保護者・教師向けに解説。",
   url: `${BASE_URL}/guide/hogosha`,
-  dateModified: "2026-05-21",
+  dateModified: "2026-05-21T00:00:00+09:00",
+  image: {
+    "@type": "ImageObject",
+    url: `${BASE_URL}/opengraph-image`,
+    width: 1200,
+    height: 630,
+  },
   author: { "@type": "Organization", name: "SafeBite", url: BASE_URL },
   publisher: {
     "@type": "Organization",

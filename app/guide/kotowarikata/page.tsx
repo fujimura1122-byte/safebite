@@ -26,12 +26,20 @@ const jsonLd = [
     headline: "闇バイトの断り方・辞め方｜脅されても安全に抜け出す方法",
     description: "状況別の具体的な断り方・辞め方と相談窓口を解説します。",
     url: "https://saferbite.org/guide/kotowarikata",
-    dateModified: "2026-05-21",
+    dateModified: "2026-05-21T00:00:00+09:00",
+    image: {
+      "@type": "ImageObject",
+      url: "https://saferbite.org/opengraph-image",
+      width: 1200,
+      height: 630,
+    },
     author: { "@type": "Organization", name: "SafeBite", url: "https://saferbite.org" },
     publisher: {
       "@type": "Organization", name: "SafeBite",
+      url: "https://saferbite.org",
       logo: { "@type": "ImageObject", url: "https://saferbite.org/opengraph-image" },
     },
+    mainEntityOfPage: { "@type": "WebPage", "@id": "https://saferbite.org/guide/kotowarikata" },
   },
   {
     "@context": "https://schema.org",

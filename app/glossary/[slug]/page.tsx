@@ -52,7 +52,13 @@ function buildJsonLd(term: Term) {
     headline: term.seoTitle,
     description: term.seoDescription,
     url: pageUrl,
-    dateModified: new Date().toISOString().split("T")[0],
+    dateModified: new Date().toISOString().replace(/\.\d{3}Z$/, "+09:00"),
+    image: {
+      "@type": "ImageObject",
+      url: "https://saferbite.org/opengraph-image",
+      width: 1200,
+      height: 630,
+    },
     author: {
       "@type": "Organization",
       name: "SafeBite",
