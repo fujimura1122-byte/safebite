@@ -7,6 +7,7 @@ import ImpactCounter  from "./_components/ImpactCounter";
 import CheckerSection from "./_components/CheckerSection";
 import ReportHubSection from "./_components/ReportHubSection";
 import SOSSection     from "./_components/SOSSection";
+import GuideSection   from "./_components/GuideSection";
 import JobsSection    from "./_components/JobsSection";
 import NewsSection    from "./_components/NewsSection";
 import AboutSection   from "./_components/AboutSection";
@@ -148,6 +149,7 @@ export default function Home() {
       <CheckerSection />     {/* client */}
       <ReportHubSection />   {/* client */}
       <SOSSection />         {/* client */}
+      <GuideSection />       {/* server */}
       <JobsSection />        {/* client */}
       <NewsSection />        {/* async server — SSR + 1時間キャッシュ */}
       <AboutSection />       {/* server */}
