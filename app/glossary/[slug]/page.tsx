@@ -1,12 +1,74 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { terms, dangerConfig, categoryConfig } from "../terms";
+import { terms, dangerConfig, categoryConfig, type Term } from "../terms";
 
 type Props = { params: Promise<{ slug: string }> };
 
 // 危険度の優先順（ソート用）
 const DANGER_ORDER = { extreme: 0, high: 1, caution: 2 } as const;
+
+// ── Schema.org JSON-LD ────────────────────────────────────────────────────────
+function buildJsonLd(term: Term) {
+  const pageUrl = `https://saferbite.org/glossary/${term.slug}`;
+  const ctaUrl  = "https://saferbite.org/#checker";
+
+  // FAQPage: Google リッチリザルト（アコーディオン表示）を狙う
+  const faqPage = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: `「${term.word}」とは何ですか？`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `${term.short}。${term.detail}`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `「${term.word}」に関与・応募した場合の罰則は？`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: term.punishment,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `「${term.word}」を使った怪しい求人を見つけたらどうすればよいですか？`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `絶対に応募しないでください。SafeBite の AI チェッカー（${ctaUrl}）に求人文を貼り付けると危険度を即座に判定できます。不安な場合は警察安全相談電話（#9110）にご相談ください。`,
+        },
+      },
+    ],
+  };
+
+  // Article: 検索結果にサイト名・日付を表示させる
+  const article = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: term.seoTitle,
+    description: term.seoDescription,
+    url: pageUrl,
+    dateModified: new Date().toISOString().split("T")[0],
+    author: {
+      "@type": "Organization",
+      name: "SafeBite",
+      url: "https://saferbite.org",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "SafeBite",
+      url: "https://saferbite.org",
+      logo: { "@type": "ImageObject", url: "https://saferbite.org/opengraph-image" },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  };
+
+  return [faqPage, article];
+}
 
 // カテゴリごとの「勧誘文例」セクション見出し
 const EXAMPLE_LABEL: Record<1 | 2 | 3, string> = {
@@ -93,8 +155,18 @@ export default async function TermPage({ params }: Props) {
   // Cat.1の高意図ページ（応募後・相談窓口）は緊急CTAを上部に表示
   const isUrgent = ["yamibaitoouboshita", "yamibaitosoudan"].includes(slug);
 
+  const jsonLd = buildJsonLd(term);
+
   return (
     <div className="min-h-screen bg-white">
+      {/* Schema.org JSON-LD */}
+      {jsonLd.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <header className="bg-slate-950 text-white py-4 px-4">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <Link href="/" className="font-black text-lg">

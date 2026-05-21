@@ -13,9 +13,62 @@ import AboutSection   from "./_components/AboutSection";
 import Footer         from "./_components/Footer";
 import QuickEscape    from "./_components/QuickEscape";
 
+// ── Schema.org JSON-LD ────────────────────────────────────────────────────────
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "SafeBite",
+  url: "https://saferbite.org",
+  description:
+    "闇バイト・詐欺求人の危険度をAIが即座に判定する公益Webサービス。隠語辞典・通報ハブ・相談先もまとめています。",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: "https://saferbite.org/glossary?q={search_term_string}",
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "SafeBite AI危険度チェッカー",
+  url: "https://saferbite.org/#checker",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "All",
+  description:
+    "怪しいバイト求人の文章を貼り付けるとAI（Gemini）が即座に危険度を判定し、闇バイトかどうかを解説します。無料・匿名で利用可能。",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
+  provider: {
+    "@type": "Organization",
+    name: "SafeBite",
+    url: "https://saferbite.org",
+  },
+};
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "SafeBite",
+  url: "https://saferbite.org",
+  logo: "https://saferbite.org/opengraph-image",
+  sameAs: ["https://x.com/SafeBiteJP"],
+  description: "闇バイト撲滅を目的とした公益Webサービス。AIによる求人危険度チェック・隠語辞典・通報支援を無料提供。",
+};
+
 export default function Home() {
   return (
     <main>
+      {/* Schema.org JSON-LD */}
+      {[websiteSchema, appSchema, orgSchema].map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <NavBar />
 
       {/* ══ HERO ══════════════════════════════════════════════

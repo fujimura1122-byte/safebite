@@ -108,9 +108,10 @@ export const TASKS: Task[] = [
   {
     id: 12,
     priority: "P3",
-    status: "todo",
+    status: "done",
     title: "Schema.org FAQ スキーマ 全ページ追加",
-    detail: "Googleリッチリザルト（アコーディオン表示）でクリック率2〜3倍。実装コスト低・費用対効果最大。",
+    detail: "個別ページ: FAQPage（3問）+ Article。一覧: ItemList（100語）。トップ: WebSite + SoftwareApplication + Organization。Googleリッチリザルト対応完了。",
+    completedAt: "2026-05-21",
   },
   {
     id: 13,

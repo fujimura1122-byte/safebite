@@ -3,6 +3,26 @@ import Link from "next/link";
 import { terms } from "./terms";
 import { GlossaryList } from "./_components/GlossaryList";
 
+const BASE_URL = "https://saferbite.org";
+
+// ── Schema.org: ItemList ──────────────────────────────────────────────────────
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "闇バイト隠語辞典 — 100語完全解説",
+  description:
+    "「UD」「ホワ案」「受け子」「叩き」など闇バイト・特殊詐欺で使われる隠語100語の意味・危険性・罰則を解説します。",
+  url: `${BASE_URL}/glossary`,
+  numberOfItems: terms.length,
+  itemListElement: terms.map((term, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: term.word,
+    url: `${BASE_URL}/glossary/${term.slug}`,
+    description: term.short,
+  })),
+};
+
 export const metadata: Metadata = {
   title: "闇バイト隠語辞典｜100語完全解説・UD・受け子・叩きの意味｜SafeBite",
   description:
@@ -14,6 +34,10 @@ export const metadata: Metadata = {
 export default function GlossaryPage() {
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
       <header className="bg-slate-950 text-white py-4 px-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="font-black text-lg">
