@@ -13,10 +13,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const term = terms.find((t) => t.slug === slug);
   if (!term) return {};
-  const title = term.word + "とは？意味・危険性・罰則を解説 | SafeBite 闇バイト隠語辞典";
-  const description =
-    "「" + term.word + "」（" + term.read + "）の意味：" + term.short + "。" +
-    term.detail.slice(0, 80) + "…。闇バイト隠語辞典 by SafeBite。";
+  const title = term.seoTitle;
+  const description = term.seoDescription;
   const pageUrl = "https://saferbite.org/glossary/" + term.slug;
 
   return {

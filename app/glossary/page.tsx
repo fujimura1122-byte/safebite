@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { terms, dangerConfig } from "./terms";
+import { terms } from "./terms";
+import { GlossaryList } from "./_components/GlossaryList";
 
 export const metadata: Metadata = {
-  title: "闇バイト隠語辞典｜UD・ホワ案・受け子・出し子の意味を解説 | SafeBite",
+  title: "闇バイト隠語辞典｜100語完全解説・UD・受け子・叩きの意味｜SafeBite",
   description:
-    "「UD」「ホワ案」「受け子」「出し子」「叩き」など、闇バイト・特殊詐欺で使われる隠語の意味と危険性を徹底解説。知らずに関わってしまう前に確認してください。",
+    "「UD」「ホワ案」「受け子」「叩き」「ガチ案件」など、闇バイト・特殊詐欺で使われる隠語100語の意味と危険性を徹底解説。怪しいバイトの見分け方・相談先もまとめています。",
   keywords:
-    "UD 意味,ホワ案 意味,受け子 バイト,出し子 意味,叩き 闇バイト,闇バイト 隠語,架け子 意味,書き子 意味,飛ばし 意味,名義貸し 意味,テレグラム 闇バイト",
+    "UD 意味,ホワ案 意味,受け子 バイト,出し子 意味,叩き 闇バイト,闇バイト 見分け方,闇バイト 断り方,架け子 意味,ガチ案件,即日払い 危険,審査なし バイト 危険",
 };
 
 export default function GlossaryPage() {
@@ -26,7 +27,7 @@ export default function GlossaryPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-12">
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <div className="inline-block bg-red-50 text-red-600 text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-widest uppercase">
             SEO・啓発コンテンツ
           </div>
@@ -34,8 +35,8 @@ export default function GlossaryPage() {
             闇バイト隠語辞典
           </h1>
           <p className="text-slate-500 text-lg leading-relaxed mb-6">
-            「UD」「ホワ案」「受け子」など、<br />
-            SNSで飛び交う<strong className="text-slate-800">闇バイトの隠語</strong>をすべて解説します。
+            SNSで飛び交う<strong className="text-slate-800">闇バイトの隠語・手口</strong>を{terms.length}語解説。<br />
+            応募する前に必ず確認してください。
           </p>
           <div className="bg-red-50 border-2 border-red-100 rounded-2xl p-5 text-sm text-red-700 leading-relaxed text-left">
             <strong className="block mb-2">⚠️ これらの言葉を使った求人には絶対に応募しないでください</strong>
@@ -43,29 +44,8 @@ export default function GlossaryPage() {
           </div>
         </div>
 
-        {/* 用語カード一覧 */}
-        <div className="flex flex-col gap-3 mb-12">
-          {terms.map((t) => {
-            const d = dangerConfig[t.danger];
-            return (
-              <Link
-                key={t.slug}
-                href={"/glossary/" + t.slug}
-                className="group border border-slate-100 hover:border-slate-200 hover:shadow-sm bg-white rounded-2xl p-5 flex items-start gap-4 transition-all"
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-1 flex-wrap">
-                    <h2 className="text-lg font-black text-slate-900 group-hover:text-red-600 transition-colors">{t.word}</h2>
-                    <span className="text-xs text-slate-400">（{t.read}）</span>
-                    <span className={"text-xs font-bold px-2 py-0.5 rounded-full border " + d.cls}>{d.label}</span>
-                  </div>
-                  <p className="text-sm text-slate-500 leading-relaxed">{t.short}</p>
-                </div>
-                <span className="text-slate-300 group-hover:text-slate-500 transition-colors text-sm mt-1 flex-shrink-0">→</span>
-              </Link>
-            );
-          })}
-        </div>
+        {/* カテゴリタブ＋一覧（クライアントコンポーネント） */}
+        <GlossaryList />
 
         {/* CTA */}
         <div className="bg-slate-950 rounded-2xl p-8 text-center">
