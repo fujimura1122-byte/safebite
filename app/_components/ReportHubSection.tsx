@@ -117,6 +117,7 @@ export default function ReportHubSection() {
   const [url, setUrl]           = useState("");
   const [text, setText]         = useState("");
   const [loading, setLoading]   = useState(false);
+  const [genError, setGenError] = useState<string | null>(null);
   const [result, setResult]     = useState<{
     is_illegal: boolean; category: string; ihc_report_text: string;
     police_report_text: string; evidence_checklist: string[]; urgency: string;
@@ -146,7 +147,7 @@ export default function ReportHubSection() {
 
   const generate = async () => {
     if (!text.trim() || loading) return;
-    setLoading(true); setResult(null);
+    setLoading(true); setResult(null); setGenError(null);
     try {
       const res  = await fetch("/api/analyze", {
         method: "POST",
@@ -160,8 +161,15 @@ export default function ReportHubSection() {
       if (data.error) throw new Error(data.error);
       setResult(data);
       sendGA("report_generated", { platform });
-    } catch { /* silent */ }
-    finally  { setLoading(false); }
+    } catch (e) {
+      setGenError(
+        e instanceof Error && e.message
+          ? e.message
+          : "通報文の生成に失敗しました。しばらく待ってから再度お試しください。"
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   const platforms = ["X（Twitter）", "Instagram", "TikTok", "LINE", "Telegram", "その他"];
@@ -315,6 +323,12 @@ export default function ReportHubSection() {
             >
               {loading ? "通報文を生成中..." : "通報文をAIで自動生成する →"}
             </button>
+            {genError && (
+              <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-xs text-red-600 flex items-start gap-2">
+                <span className="flex-shrink-0 mt-0.5">⚠️</span>
+                <span>{genError}</span>
+              </div>
+            )}
           </div>
         </div>
 
