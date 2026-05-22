@@ -167,9 +167,10 @@ export const TASKS: Task[] = [
   {
     id: 23,
     priority: "P3",
-    status: "todo",
+    status: "done",
     title: "GA4アナリティクス 実装・流入計測開始",
-    detail: "現状、流入数・離脱率・コンバージョンが不明。Google Analytics 4を設置してオーガニック/SNS/直接流入を計測。月次KPI（UV・チェック回数・アフィリCTR）を可視化する。",
+    detail: "G-38B60QXS6D で設置済み。RouteTracker.tsx でSPAページ遷移を計測。イベント: ai_check / checker_started / share / affiliate_click / report_generated / sos_template_generated / contact_submitted / ihc_link_opened。ダッシュボードでコンバージョン設定・オーディエンス設定が必要（手順書提供済み）。",
+    completedAt: "2026-05-22",
   },
   {
     id: 24,
