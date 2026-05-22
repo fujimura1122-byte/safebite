@@ -1,6 +1,7 @@
 import { TASKS, PRIORITY_LABELS, STATUS_CONFIG, type Priority } from "./tasks";
 import { terms } from "../glossary/terms";
 import { auth, signOut } from "@/auth";
+import MonitorSection from "./_components/MonitorSection";
 
 export const metadata = { title: "Dev Dashboard | SafeBite", robots: "noindex,nofollow" };
 
@@ -212,6 +213,9 @@ export default async function DevDashboard() {
             })}
           </div>
         </section>
+
+        {/* 監視パネル */}
+        <MonitorSection />
 
         {/* ロードマップ */}
         <section>
