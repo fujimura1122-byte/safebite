@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { sendGA } from "@/app/_components/tracking";
 
 type FormState = "idle" | "sending" | "success" | "error";
 
@@ -34,6 +35,7 @@ export default function ContactPage() {
       });
       if (!res.ok) throw new Error();
       setState("success");
+      sendGA("contact_submitted", { inquiry_type: form.type });
     } catch {
       setState("error");
     }

@@ -1,6 +1,7 @@
 "use client";
 import { sendGA } from "./tracking";
 import { VC_ARUBAITO_EX_URL, VC_ARUBAITO_EX_PIXEL } from "./constants";
+import SectionTitle from "./SectionTitle";
 
 const jobs = [
   { title: "引越し・軽作業スタッフ", pay: "時給1,500〜2,000円",     style: "日払いOK・週1〜",         tag: "体力系" },
@@ -13,17 +14,15 @@ const jobs = [
 
 export default function JobsSection() {
   return (
-    <section id="jobs" className="py-20 px-4 bg-slate-50">
+    <section id="jobs" className="py-24 px-4 bg-white">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-10">
-          <div className="inline-block text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-widest uppercase bg-blue-600 text-white">
-            機能④ ホワイト求人
-          </div>
-          <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-3">
-            今すぐ安全に稼げる求人
-          </h2>
-          <p className="text-slate-500 text-sm">日払い・即日スタート可能な安全な求人をご紹介</p>
-        </div>
+        <SectionTitle
+          label="ホワイト求人 — SAFE JOBS"
+          title={<>今すぐ安全に<br />稼げる求人</>}
+          subtitle="日払い・即日スタート可能な安全な求人をご紹介。闇バイトに頼る必要はありません。"
+          dark={false}
+          accent="blue"
+        />
 
         {/* アルバイトEX メインCTA */}
         <a

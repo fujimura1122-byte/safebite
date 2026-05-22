@@ -1,5 +1,6 @@
 import Redis from "ioredis";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit } from "../../lib/rateLimit";
 
 const VALID_KEYS = ["ai_checks", "reports_submitted", "sos_generated", "ihc_verified"] as const;
 
@@ -35,7 +36,17 @@ export async function GET() {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  // レートリミット: 1IP あたり 30回/分（各AI操作1回分のインクリメント）
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown";
+  const allowed = await checkRateLimit(ip, "counter", 30, 60);
+  if (!allowed) {
+    return NextResponse.json({ error: "rate limited" }, { status: 429 });
+  }
+
   try {
     const { key } = await req.json();
     if (!VALID_KEYS.includes(key)) {

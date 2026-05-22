@@ -17,8 +17,10 @@ export default function HeroTextarea() {
     <>
       <div
         className={
-          "border rounded-2xl overflow-hidden mb-3 transition-all " +
-          (text ? "border-red-500/30 ring-1 ring-red-500/20" : "border-blue-500/20")
+          "rounded-2xl overflow-hidden mb-3 transition-all " +
+          (text
+            ? "ring-2 ring-red-500/40 border border-red-500/30"
+            : "border border-white/10")
         }
       >
         <textarea
@@ -32,7 +34,7 @@ export default function HeroTextarea() {
       <button
         onClick={handleCheck}
         disabled={!text.trim()}
-        className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-slate-100 disabled:text-slate-400 text-white font-black py-4 rounded-2xl text-base transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 mb-5"
+        className="w-full bg-red-600 hover:bg-red-500 disabled:bg-white/5 disabled:text-slate-600 text-white font-black py-4 rounded-2xl text-base transition-all shadow-lg shadow-red-900/30 flex items-center justify-center gap-2 mb-5"
       >
         <span className="text-xl">🔍</span>
         今すぐ危険度を判定する →

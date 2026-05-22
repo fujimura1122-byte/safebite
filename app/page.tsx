@@ -76,27 +76,36 @@ export default function Home() {
           h1・説明文・信頼バッジ・統計 → サーバーレンダリング済み
           テキストエリア・ボタン・スクロールリンク → クライアントアイランド
       ═══════════════════════════════════════════════════════ */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-4 pt-14 bg-gradient-to-br from-white via-blue-50 to-indigo-100 relative overflow-hidden">
-        {/* 背景グロー */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-200/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-200/20 rounded-full blur-3xl" />
-        </div>
+      <section className="min-h-screen flex flex-col items-center justify-center px-4 pt-14 bg-slate-950 relative overflow-hidden">
+        {/* 背景グリッドテクスチャ */}
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
+        {/* 赤いグロー（右上） */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-950/50 rounded-full blur-3xl pointer-events-none" />
+        {/* 微細なグロー（左下） */}
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-slate-800/60 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-lg mx-auto w-full text-center relative z-10">
-          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold px-4 py-2 rounded-full mb-6 tracking-widest uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+          {/* バッジ */}
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 text-slate-400 text-xs font-bold px-4 py-2 rounded-full mb-8 tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
             無料・匿名・入力内容は保存なし
           </div>
 
           {/* ── SEO的に最重要な h1 ── サーバー描画 */}
-          <h1 className="text-4xl sm:text-5xl font-black text-slate-900 leading-tight tracking-tight mb-3">
+          <h1 className="text-5xl sm:text-6xl font-black text-white leading-[1.05] tracking-tight mb-4">
             そのバイト募集、<br />
             <span className="text-red-500">本当に大丈夫？</span>
           </h1>
 
-          <p className="text-slate-600 text-sm leading-relaxed mb-5">
-            怪しいDM・求人文を<strong className="text-slate-900">ここにコピペするだけ。</strong><br />
+          <p className="text-slate-400 text-sm leading-relaxed mb-8">
+            怪しいDM・求人文を<strong className="text-white">ここにコピペするだけ。</strong><br />
             AIが危険度をすぐ判定します。
           </p>
 
@@ -107,10 +116,10 @@ export default function Home() {
           <HeroSubActions />
 
           {/* 信頼バッジ — サーバー描画 */}
-          <div className="bg-white/80 border border-blue-100 rounded-2xl p-4 text-left">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-left">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-emerald-400 text-sm">🔒</span>
-              <span className="text-xs font-bold text-slate-800">このサイトは安全です</span>
+              <span className="text-xs font-bold text-slate-300">このサイトは安全です</span>
             </div>
             <div className="grid grid-cols-1 gap-1.5">
               {[
@@ -118,7 +127,7 @@ export default function Home() {
                 "個人情報の収集・販売は行いません",
                 "警察・行政機関への通報支援が目的の公益サービス",
               ].map((t) => (
-                <div key={t} className="flex items-center gap-2 text-xs text-slate-600">
+                <div key={t} className="flex items-center gap-2 text-xs text-slate-500">
                   <span className="text-emerald-500 flex-shrink-0">✓</span>
                   {t}
                 </div>
@@ -133,8 +142,8 @@ export default function Home() {
               { n: "2,000億円超", label: "2024年の特殊詐欺被害総額（警察庁）" },
               { n: "10代の3割",   label: "闇バイト募集を見たことがある" },
             ].map(({ n, label }) => (
-              <div key={n} className="bg-white/80 border border-blue-100 rounded-xl px-4 py-3 text-center">
-                <div className="text-lg font-black text-blue-600">{n}</div>
+              <div key={n} className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-center">
+                <div className="text-lg font-black text-red-400">{n}</div>
                 <div className="text-xs text-slate-500 mt-0.5">{label}</div>
               </div>
             ))}

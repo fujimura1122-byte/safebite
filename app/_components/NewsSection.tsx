@@ -1,5 +1,6 @@
 // 非同期サーバーコンポーネント — クライアント JS 不要
 // ニュースをサーバーサイドで取得してSSRする（1時間キャッシュ）
+import SectionTitle from "./SectionTitle";
 
 type NewsItem = { title: string; link: string; pubDate: string; source: string };
 
@@ -45,17 +46,15 @@ export default async function NewsSection() {
   if (items.length === 0) return null;
 
   return (
-    <section className="py-16 px-4 bg-white">
+    <section className="py-24 px-4 bg-slate-50">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-8">
-          <div className="inline-block text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-widest uppercase bg-slate-100 text-slate-600">
-            最近の逮捕事例
-          </div>
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-2">
-            闇バイト関連ニュース
-          </h2>
-          <p className="text-slate-500 text-sm">実際の逮捕事例を知ることが最大の抑止力です</p>
-        </div>
+        <SectionTitle
+          label="最近の逮捕事例 — LATEST NEWS"
+          title={<>闇バイト<br />関連ニュース</>}
+          subtitle="実際の逮捕事例を知ることが最大の抑止力です。「自分は大丈夫」は禁物です。"
+          dark={false}
+          accent="slate"
+        />
 
         <div className="flex flex-col gap-2">
           {items.map((item, i) => (

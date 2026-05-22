@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { updateStatus, type PostStatus } from "@/app/lib/monitorStore";
+import { checkRateLimit } from "@/app/lib/rateLimit";
 
 /**
  * PATCH /api/monitor/status
@@ -11,6 +12,16 @@ export async function PATCH(req: NextRequest) {
   const session = await auth();
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // レートリミット: ステータス更新は 60回/分まで
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown";
+  const allowed = await checkRateLimit(ip, "monitor-status", 60, 60);
+  if (!allowed) {
+    return NextResponse.json({ error: "Rate limited" }, { status: 429 });
   }
 
   let id: string, status: PostStatus, reportRef: string | undefined;

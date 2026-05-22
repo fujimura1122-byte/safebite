@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import Script from "next/script";
+import RouteTracker from "./_components/RouteTracker";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -50,6 +51,7 @@ export default function RootLayout({
     <html lang="ja" className={`${geistSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         {children}
+        <RouteTracker />
       </body>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-38B60QXS6D"
@@ -60,7 +62,11 @@ export default function RootLayout({
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-38B60QXS6D');
+          gtag('config', 'G-38B60QXS6D', {
+            anonymize_ip: true,
+            link_attribution: true,
+            send_page_view: true,
+          });
         `}
       </Script>
     </html>

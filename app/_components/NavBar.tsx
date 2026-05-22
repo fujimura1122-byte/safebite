@@ -6,11 +6,11 @@ export default function NavBar() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-xl border-b border-white/5">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
         <div className="font-black text-lg tracking-tight">
-          <span className="text-blue-600">Safe</span>
-          <span className="text-slate-900">Bite</span>
+          <span className="text-red-500">Safe</span>
+          <span className="text-white">Bite</span>
         </div>
         <div className="flex items-center gap-0.5 text-xs font-bold flex-wrap justify-end">
           {[
@@ -22,20 +22,20 @@ export default function NavBar() {
             <button
               key={n.id}
               onClick={() => scrollTo(n.id)}
-              className="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all"
+              className="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all"
             >
               {n.label}
             </button>
           ))}
           <a
             href="/glossary"
-            className="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all"
+            className="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all"
           >
             隠語辞典
           </a>
           <a
             href="/guide/kotowarikata"
-            className="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all"
+            className="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all"
           >
             ガイド
           </a>

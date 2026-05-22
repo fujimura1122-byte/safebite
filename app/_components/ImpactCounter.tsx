@@ -18,8 +18,8 @@ export default function ImpactCounter() {
   if (total === 0) return null;
 
   return (
-    <div className="mt-6 bg-white border border-blue-100 shadow-sm rounded-2xl px-6 py-4">
-      <div className="text-xs font-bold text-slate-500 uppercase tracking-widest text-center mb-3">
+    <div className="mt-6 bg-white/5 border border-white/10 rounded-2xl px-6 py-4">
+      <div className="text-xs font-bold text-slate-600 uppercase tracking-widest text-center mb-3">
         SafeBite 累計実績
       </div>
       <div className="flex justify-around gap-2 flex-wrap">

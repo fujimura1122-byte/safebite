@@ -1,6 +1,20 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit } from "../../lib/rateLimit";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  // レートリミット: 1IP あたり 20回/分
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown";
+  const allowed = await checkRateLimit(ip, "fetch-tweet", 20, 60);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "リクエストが多すぎます。少し待ってから再試行してください。" },
+      { status: 429 }
+    );
+  }
+
   try {
     const { url } = await req.json();
 

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { sendGA, incCounter } from "./tracking";
 import { YAMI_KEYWORDS, SHARE_URL, A8_NORTON_URL } from "./constants";
+import SectionTitle from "./SectionTitle";
 
 type Result = {
   score: number; verdict: string; reasons: string[];
@@ -41,6 +42,7 @@ export default function CheckerSection() {
   const analyzeText = async (target: string) => {
     if (!target.trim() || loading) return;
     setLoading(true); setError(null); setResult(null);
+    sendGA("checker_started", { text_length: target.length });
     try {
       const res  = await fetch("/api/analyze", {
         method: "POST",
@@ -72,17 +74,15 @@ export default function CheckerSection() {
     : null;
 
   return (
-    <section id="checker" className="py-20 px-4 bg-white">
+    <section id="checker" className="py-24 px-4 bg-white">
       <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-10">
-          <div className="inline-block text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-widest uppercase bg-amber-500 text-white">
-            機能① AI危険度チェッカー
-          </div>
-          <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-3">
-            求人文を貼るだけで瞬時判定
-          </h2>
-          <p className="text-slate-500 text-sm">SNSのDM・投稿文をそのまま貼り付けてください</p>
-        </div>
+        <SectionTitle
+          label="AI危険度チェッカー — FEATURE 01"
+          title={<>求人文を貼るだけで<br />瞬時判定</>}
+          subtitle="SNSのDM・投稿文をそのまま貼り付けてください。AIが闇バイトの特徴を即座に解析します。"
+          dark={false}
+          accent="red"
+        />
 
         <div className={"border rounded-2xl overflow-hidden mb-4 transition-all " +
           (text ? "border-blue-400 ring-2 ring-blue-100" : "border-slate-200")}>
