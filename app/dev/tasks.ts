@@ -122,25 +122,103 @@ export const TASKS: Task[] = [
     completedAt: "2026-05-21",
   },
 
-  // ── P4 自動化拡張（1〜2ヶ月後）──────────────────────────────
+  // ── P3 セキュリティ・品質（2026-05-22 完了）────────────────────
   {
-    id: 14,
-    priority: "P4",
-    status: "todo",
-    title: "TikTok / YouTube Shorts 自動配信",
-    detail: "x_broadcast.py を拡張。RSS → Geminiナレーション → 縦型動画 → 自動アップロード。月1,000PV達成後に着手。",
+    id: 18,
+    priority: "P3",
+    status: "done",
+    title: "全APIルート セキュリティ強化",
+    detail: "fetch-tweet / contact / counter / monitor/ingest / monitor/posts / monitor/status 全6エンドポイントにレートリミット追加。ingest にフィールドバリデーション・最大50件制限も実装。",
+    completedAt: "2026-05-22",
   },
   {
-    id: 15,
+    id: 19,
+    priority: "P3",
+    status: "done",
+    title: "モニターダッシュボード（/dev）構築",
+    detail: "x_monitor.py の検知投稿をRedisに蓄積。/devページにMonitorSectionを追加。未対応/通報済/誤報のステータス管理・IHC参照番号入力・フィルタータブ完備。",
+    completedAt: "2026-05-22",
+  },
+  {
+    id: 20,
+    priority: "P3",
+    status: "done",
+    title: "サイト全面リデザイン（警視庁風）",
+    detail: "ヒーローをdark slate-950に変更。SectionTitleコンポーネント（英語ラベルチップ+大見出し）を全セクションに適用。NavBar・GuideSection・AboutSectionをダーク化。インパクトメッセージ追加。",
+    completedAt: "2026-05-22",
+  },
+  {
+    id: 21,
+    priority: "P3",
+    status: "done",
+    title: "X Premium対応 v5.1（スレッド戦略）",
+    detail: "INFO/CTAをスレッド投稿化（本文URLなし→自己リプライでリンク提供）。ENGAGE全角200文字に拡張。カード画像をダークテーマにリブランド。ニュースフィルターを闇バイト特化に修正。",
+    completedAt: "2026-05-22",
+  },
+
+  // ── P3 SNS拡張（短期：Month 1-3）────────────────────────────
+  {
+    id: 22,
+    priority: "P3",
+    status: "todo",
+    title: "TikTokアカウント開設・初投稿10本",
+    detail: "@safebite_jp でアカウント開設。「再現ドラマ風」「逮捕事例速報」「隠語クイズ」の3パターンを手動で10本投稿。Bioにsaferbite.orgリンク設置。バズった後に自動化検討。",
+  },
+  {
+    id: 23,
+    priority: "P3",
+    status: "todo",
+    title: "GA4アナリティクス 実装・流入計測開始",
+    detail: "現状、流入数・離脱率・コンバージョンが不明。Google Analytics 4を設置してオーガニック/SNS/直接流入を計測。月次KPI（UV・チェック回数・アフィリCTR）を可視化する。",
+  },
+  {
+    id: 24,
+    priority: "P3",
+    status: "todo",
+    title: "PR Timesでプレスリリース投稿（無料）",
+    detail: "「闇バイト防止AIツール saferbite.org を一般公開」のリリースをPR Timesに無料投稿。DA50+のバックリンク獲得とメディア露出を狙う。見出し：「AIが闇バイト求人を即判定、無料の公益サービス」。",
+  },
+  {
+    id: 25,
+    priority: "P3",
+    status: "todo",
+    title: "Instagramアカウント開設・リール投稿",
+    detail: "TikTok動画をリールとして流用（編集コストゼロ）。ストーリーズで「今日の逮捕事例」を日次更新。ハイライトに「SafeBiteの使い方」を固定。TikTok開設後に着手。",
+  },
+
+  // ── P4 中期拡張（Month 4-12）──────────────────────────────
+  {
+    id: 26,
+    priority: "P4",
+    status: "todo",
+    title: "警察庁・都道府県警リンク集への掲載申請",
+    detail: "keishicho_tokuryu のリンク集ページに SafeBite を掲載申請。警視庁・各都道府県警の「関連リンク」ページへの申請フォーム送信。DA80+バックリンク＋信頼性が一気に上がる。",
+  },
+  {
+    id: 27,
+    priority: "P4",
+    status: "todo",
+    title: "LINE OpenChat 開設（国内最大到達）",
+    detail: "「闇バイト・怪しいDM 相談所」としてOpenChatを開設。人が投稿した求人文をSafeBiteでチェック→結果を返信。週1回管理で数百〜数千人にリーチ。",
+  },
+  {
+    id: 28,
+    priority: "P4",
+    status: "todo",
+    title: "TikTok / Instagram 自動投稿システム",
+    detail: "x_broadcast.pyを拡張。Gemini動画ナレーション→縦型動画生成→TikTok API/Meta Graph APIで自動アップロード。月UV 15,000達成後に着手。",
+  },
+  {
+    id: 29,
     priority: "P4",
     status: "todo",
     title: "A8 アフィリエイト収益の最適化",
-    detail: "Norton / 弁護士LP へのリンクを戦略的配置。月額固定費の自己調達を目指す。",
+    detail: "Norton / 弁護士LP へのリンクを戦略的配置。チェッカー結果画面のスコア70以上で Norton 表示（実装済み）。GuideSection CTAにも追加。月額固定費の自己調達を目指す。",
   },
 
   // ── P5 将来フェーズ（3ヶ月以降）──────────────────────────────
   {
-    id: 16,
+    id: 30,
     priority: "P5",
     status: "todo",
     title: "OSINT 脅威データベース（内部蓄積）",
@@ -148,7 +226,7 @@ export const TASKS: Task[] = [
     blockedBy: "流入増加 + 法務確認",
   },
   {
-    id: 17,
+    id: 31,
     priority: "P5",
     status: "todo",
     title: "外部 API パートナーシップ",
