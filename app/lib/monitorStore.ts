@@ -24,7 +24,7 @@ function getRedis(): Redis {
 
 // ── 型定義 ─────────────────────────────────────────────────────────────────
 
-export type PostStatus = "未対応" | "通報済" | "誤報";
+export type PostStatus = "未対応" | "通報済" | "誤報" | "グレー";
 
 export interface MonitorPost {
   id:          string;   // tweet ID (数字列)

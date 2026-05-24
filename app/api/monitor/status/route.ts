@@ -31,7 +31,7 @@ export async function PATCH(req: NextRequest) {
     status    = body.status;
     reportRef = body.reportRef;
 
-    if (!id || !["未対応", "通報済", "誤報"].includes(status)) {
+    if (!id || !["未対応", "通報済", "誤報", "グレー"].includes(status)) {
       return NextResponse.json({ error: "id and valid status required" }, { status: 400 });
     }
   } catch {

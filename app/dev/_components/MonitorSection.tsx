@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 
 // ── 型定義 ──────────────────────────────────────────────────────────────────
 
-type PostStatus = "未対応" | "通報済" | "誤報";
+type PostStatus = "未対応" | "通報済" | "誤報" | "グレー";
 
 interface MonitorPost {
   id:         string;
@@ -17,7 +17,7 @@ interface MonitorPost {
   reportRef?: string;
 }
 
-type Filter = "すべて" | PostStatus;
+type Filter = "すべて" | PostStatus | "グレー";
 
 // ── スタイル定数 ─────────────────────────────────────────────────────────────
 
@@ -39,6 +39,12 @@ const STATUS_CFG: Record<PostStatus, { label: string; dot: string; badge: string
     dot:   "bg-slate-500",
     badge: "bg-slate-800 text-slate-400 border border-slate-600",
     btn:   "bg-slate-800 text-slate-400 border border-slate-600 hover:bg-slate-700",
+  },
+  グレー: {
+    label: "グレー",
+    dot:   "bg-amber-400",
+    badge: "bg-amber-900/40 text-amber-300 border border-amber-700",
+    btn:   "bg-amber-900/60 text-amber-300 border border-amber-700 hover:bg-amber-800",
   },
 };
 
@@ -82,7 +88,8 @@ function PostCard({
 
   return (
     <div className={`bg-slate-900 border rounded-xl p-4 space-y-3 transition-opacity ${
-      post.status === "誤報" ? "opacity-40 hover:opacity-80" : ""
+      post.status === "誤報"  ? "opacity-40 hover:opacity-80" :
+      post.status === "グレー" ? "border-amber-900/60" : ""
     }`}>
       {/* ヘッダー行 */}
       <div className="flex items-center gap-2 flex-wrap">
@@ -93,8 +100,17 @@ function PostCard({
         <span className="text-xs text-slate-600 ml-auto">{fmtDate(post.detectedAt)}</span>
       </div>
 
+      {/* グレーゾーン注釈 */}
+      {post.status === "グレー" && (
+        <div className="text-xs bg-amber-900/20 border border-amber-800/50 rounded-lg px-3 py-2 text-amber-300">
+          ⚠️ <strong>グレーゾーン</strong> — 直接的な犯罪実行役募集ではないが、反社関与・法的グレーの可能性あり。IHC通報対象外。プラットフォームへの通報を推奨。
+        </div>
+      )}
+
       {/* 本文 */}
-      <div className="text-xs text-slate-300 leading-relaxed bg-slate-800 rounded-lg p-3 border-l-2 border-red-600 whitespace-pre-wrap font-mono">
+      <div className={`text-xs text-slate-300 leading-relaxed bg-slate-800 rounded-lg p-3 border-l-2 whitespace-pre-wrap font-mono ${
+        post.status === "グレー" ? "border-amber-600" : "border-red-600"
+      }`}>
         {post.text}
       </div>
 
@@ -108,20 +124,31 @@ function PostCard({
         >
           投稿を見る ↗
         </a>
-        <a
-          href="https://www.internethotline.jp/services/reports/new"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs font-bold px-3 py-1.5 rounded-lg bg-red-900/60 text-red-300 border border-red-800 hover:bg-red-800 transition-colors"
-        >
-          IHCに通報 ↗
-        </a>
+        {post.status === "グレー" ? (
+          <a
+            href={`https://x.com/intent/report?tweet_id=${post.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-bold px-3 py-1.5 rounded-lg bg-amber-900/60 text-amber-300 border border-amber-800 hover:bg-amber-800 transition-colors"
+          >
+            Xに通報 ↗
+          </a>
+        ) : (
+          <a
+            href="https://www.internethotline.jp/services/reports/new"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-bold px-3 py-1.5 rounded-lg bg-red-900/60 text-red-300 border border-red-800 hover:bg-red-800 transition-colors"
+          >
+            IHCに通報 ↗
+          </a>
+        )}
       </div>
 
       {/* ステータス切替 */}
       <div className="flex items-center gap-2 flex-wrap">
         <span className="text-xs text-slate-500">ステータス:</span>
-        {(["未対応", "通報済", "誤報"] as PostStatus[]).map((s) => (
+        {(["未対応", "グレー", "通報済", "誤報"] as PostStatus[]).map((s) => (
           <button
             key={s}
             disabled={saving}
@@ -208,6 +235,7 @@ export default function MonitorSection() {
   const counts = {
     total:  posts.length,
     未対応: posts.filter((p) => p.status === "未対応").length,
+    グレー: posts.filter((p) => p.status === "グレー").length,
     通報済: posts.filter((p) => p.status === "通報済").length,
     誤報:   posts.filter((p) => p.status === "誤報").length,
   };
@@ -240,12 +268,13 @@ export default function MonitorSection() {
       </div>
 
       {/* 統計バー */}
-      <div className="grid grid-cols-4 gap-2 mb-4">
+      <div className="grid grid-cols-5 gap-2 mb-4">
         {[
-          { label: "合計",  value: counts.total,  dot: "bg-slate-400" },
-          { label: "未対応", value: counts.未対応, dot: "bg-yellow-400" },
-          { label: "通報済", value: counts.通報済, dot: "bg-green-400"  },
-          { label: "誤報",   value: counts.誤報,   dot: "bg-slate-600"  },
+          { label: "合計",   value: counts.total,   dot: "bg-slate-400"  },
+          { label: "未対応", value: counts.未対応,  dot: "bg-yellow-400" },
+          { label: "グレー", value: counts.グレー,  dot: "bg-amber-400"  },
+          { label: "通報済", value: counts.通報済,  dot: "bg-green-400"  },
+          { label: "誤報",   value: counts.誤報,    dot: "bg-slate-600"  },
         ].map(({ label, value, dot }) => (
           <div key={label} className="bg-slate-900 border border-slate-800 rounded-xl p-3 text-center">
             <div className="flex items-center justify-center gap-1.5 mb-1">
@@ -259,7 +288,7 @@ export default function MonitorSection() {
 
       {/* フィルタータブ */}
       <div className="flex gap-2 mb-4 flex-wrap">
-        {(["未対応", "すべて", "通報済", "誤報"] as Filter[]).map((f) => (
+        {(["未対応", "グレー", "すべて", "通報済", "誤報"] as Filter[]).map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
@@ -272,7 +301,7 @@ export default function MonitorSection() {
             {f}
             {f !== "すべて" && (
               <span className="ml-1.5 text-slate-500">
-                {counts[f as PostStatus]}
+                {counts[f as keyof typeof counts]}
               </span>
             )}
           </button>
@@ -305,11 +334,17 @@ export default function MonitorSection() {
         </div>
       )}
 
-      {/* IHC通報ガイド */}
+      {/* 通報フローガイド */}
       {counts.未対応 > 0 && (
         <div className="mt-4 bg-red-950/40 border border-red-900 rounded-xl p-4 text-xs text-red-300 leading-loose">
-          <strong className="block text-red-200 mb-1">📋 通報フロー</strong>
+          <strong className="block text-red-200 mb-1">📋 闇バイト通報フロー</strong>
           ① 「投稿を見る」でX確認 → ② 「IHCに通報」で通報 → ③ 参照番号を入力して「通報済」に変更 → ④ X投稿へコメント
+        </div>
+      )}
+      {counts.グレー > 0 && (
+        <div className="mt-4 bg-amber-950/40 border border-amber-900 rounded-xl p-4 text-xs text-amber-300 leading-loose">
+          <strong className="block text-amber-200 mb-1">⚠️ グレーゾーン対応フロー</strong>
+          打ち子・換金所・グレーギャンブル系はIHC通報対象外。① 「Xに通報」でプラットフォーム報告 → ② ステータスを「グレー」に設定して管理
         </div>
       )}
     </section>
