@@ -8,9 +8,10 @@ import { checkRateLimit } from "@/app/lib/rateLimit";
  * Bearer トークン認証（EMAIL_INBOUND_SECRET）のみ許可。
  */
 export async function POST(req: NextRequest) {
-  // Bearer認証
-  const auth   = req.headers.get("authorization");
-  const secret = process.env.EMAIL_INBOUND_SECRET;
+  // Bearer認証（BOM ﻿ を両辺から除去して比較）
+  const stripBOM = (s: string) => s.replace(/^﻿/, "");
+  const auth   = stripBOM(req.headers.get("authorization") ?? "");
+  const secret = stripBOM(process.env.EMAIL_INBOUND_SECRET ?? "");
   if (!secret || auth !== `Bearer ${secret}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
