@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { getInbox, getSent, markRead } from "@/app/lib/emailStore";
+import { getInbox, getSent, markRead, deleteEmail } from "@/app/lib/emailStore";
 import { checkRateLimit } from "@/app/lib/rateLimit";
 
 /**
@@ -41,6 +41,26 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ ok });
   } catch (e) {
     console.error("[email/inbox] markRead error:", e);
+    return NextResponse.json({ error: "storage_unavailable" }, { status: 500 });
+  }
+}
+
+/**
+ * DELETE /api/email/inbox
+ * メールを削除する。
+ */
+export async function DELETE(req: NextRequest) {
+  const session = await auth();
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { id } = await req.json();
+  if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+
+  try {
+    const ok = await deleteEmail(id);
+    return NextResponse.json({ ok });
+  } catch (e) {
+    console.error("[email/inbox] delete error:", e);
     return NextResponse.json({ error: "storage_unavailable" }, { status: 500 });
   }
 }

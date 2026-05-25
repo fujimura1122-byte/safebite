@@ -44,13 +44,16 @@ function EmailDetail({
   email,
   onReply,
   onClose,
+  onDelete,
 }: {
-  email:   InboundEmail | OutboundEmail;
-  onReply: (to: string, subject: string) => void;
-  onClose: () => void;
+  email:    InboundEmail | OutboundEmail;
+  onReply:  (to: string, subject: string) => void;
+  onClose:  () => void;
+  onDelete: (id: string) => void;
 }) {
   const isInbound = email.direction === "inbound";
   const date      = isInbound ? (email as InboundEmail).receivedAt : (email as OutboundEmail).sentAt;
+  const [confirming, setConfirming] = useState(false);
 
   return (
     <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 space-y-3">
@@ -73,18 +76,45 @@ function EmailDetail({
         {email.textBody || "(本文なし)"}
       </div>
 
-      {/* 返信ボタン */}
-      {isInbound && (
-        <button
-          onClick={() => onReply(
-            (email as InboundEmail).from,
-            email.subject.startsWith("Re:") ? email.subject : `Re: ${email.subject}`
-          )}
-          className="text-xs font-bold px-4 py-2 rounded-lg bg-blue-900/60 text-blue-300 border border-blue-700 hover:bg-blue-800 transition-colors"
-        >
-          ↩ 返信する
-        </button>
-      )}
+      {/* アクションボタン */}
+      <div className="flex items-center gap-2 flex-wrap">
+        {isInbound && (
+          <button
+            onClick={() => onReply(
+              (email as InboundEmail).from,
+              email.subject.startsWith("Re:") ? email.subject : `Re: ${email.subject}`
+            )}
+            className="text-xs font-bold px-4 py-2 rounded-lg bg-blue-900/60 text-blue-300 border border-blue-700 hover:bg-blue-800 transition-colors"
+          >
+            ↩ 返信する
+          </button>
+        )}
+
+        {!confirming ? (
+          <button
+            onClick={() => setConfirming(true)}
+            className="text-xs px-3 py-2 rounded-lg text-red-400 border border-red-900 hover:bg-red-950 transition-colors ml-auto"
+          >
+            🗑 削除
+          </button>
+        ) : (
+          <div className="flex items-center gap-2 ml-auto">
+            <span className="text-xs text-red-400">本当に削除しますか？</span>
+            <button
+              onClick={() => onDelete(email.id)}
+              className="text-xs font-bold px-3 py-1.5 rounded-lg bg-red-700 text-white hover:bg-red-600 transition-colors"
+            >
+              削除する
+            </button>
+            <button
+              onClick={() => setConfirming(false)}
+              className="text-xs px-3 py-1.5 rounded-lg text-slate-400 border border-slate-700 hover:border-slate-500 transition-colors"
+            >
+              キャンセル
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -220,6 +250,21 @@ export default function EmailSection() {
     }
   }, []);
 
+  const handleDelete = useCallback(async (id: string) => {
+    try {
+      await fetch("/api/email/inbox", {
+        method:  "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ id }),
+      });
+      setSelected(null);
+      setInbox((prev) => prev.filter((e) => e.id !== id));
+      setSent((prev)  => prev.filter((e) => e.id !== id));
+    } catch {
+      // silent — list already refetches on next refresh
+    }
+  }, []);
+
   const unread  = inbox.filter((e) => !e.read).length;
   const current = tab === "受信" ? inbox : sent;
 
@@ -288,6 +333,7 @@ export default function EmailSection() {
             email={selected}
             onReply={(to, subject) => { setCompose({ to, subject }); setSelected(null); }}
             onClose={() => setSelected(null)}
+            onDelete={handleDelete}
           />
         </div>
       )}

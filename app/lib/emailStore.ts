@@ -115,3 +115,17 @@ export async function getUnreadCount(): Promise<number> {
   const inbox = await getInbox();
   return inbox.filter((e) => !e.read).length;
 }
+
+// ── 削除 ─────────────────────────────────────────────────────────────────────
+
+export async function deleteEmail(id: string): Promise<boolean> {
+  const redis = getRedis();
+  const raw   = await redis.get(EMAIL_KEY(id));
+  if (!raw) return false;
+  const list = id.startsWith("inb_") ? INBOX_LIST : SENT_LIST;
+  await Promise.all([
+    redis.del(EMAIL_KEY(id)),
+    redis.lrem(list, 0, id),
+  ]);
+  return true;
+}
