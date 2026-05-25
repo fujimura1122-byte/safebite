@@ -15,9 +15,14 @@ export async function GET(req: NextRequest) {
   const allowed = await checkRateLimit(ip, "email-inbox", 60, 60);
   if (!allowed) return NextResponse.json({ error: "Rate limited" }, { status: 429 });
 
-  const [inbox, sent] = await Promise.all([getInbox(), getSent()]);
-  const unread = inbox.filter((e) => !e.read).length;
-  return NextResponse.json({ inbox, sent, unread });
+  try {
+    const [inbox, sent] = await Promise.all([getInbox(), getSent()]);
+    const unread = inbox.filter((e) => !e.read).length;
+    return NextResponse.json({ inbox, sent, unread });
+  } catch (e) {
+    console.error("[email/inbox] Redis error:", e);
+    return NextResponse.json({ inbox: [], sent: [], unread: 0, error: "storage_unavailable" });
+  }
 }
 
 /**
@@ -31,6 +36,11 @@ export async function PATCH(req: NextRequest) {
   const { id } = await req.json();
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
 
-  const ok = await markRead(id);
-  return NextResponse.json({ ok });
+  try {
+    const ok = await markRead(id);
+    return NextResponse.json({ ok });
+  } catch (e) {
+    console.error("[email/inbox] markRead error:", e);
+    return NextResponse.json({ error: "storage_unavailable" }, { status: 500 });
+  }
 }
