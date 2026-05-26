@@ -160,9 +160,9 @@ export const TASKS: Task[] = [
   {
     id: 22,
     priority: "P3",
-    status: "todo",
+    status: "in-progress",
     title: "TikTokアカウント開設・初投稿10本",
-    detail: "@safebite_jp でアカウント開設。「隠語クイズ」「逮捕事例速報」「断り方ロールプレイ」の3パターンを手動で10本投稿。Bioにsaferbite.orgリンク設置。TikTok実績ができてからPR Times投稿するとニュース性UP。バズった後に自動化（Task #28）へ。",
+    detail: "@safebite_jp でアカウント開設済み・1本目投稿済み（2026-05-26）。残り9本を投稿予定。「隠語クイズ」「逮捕事例速報」「断り方ロールプレイ」の3パターン。Bioにsaferbite.orgリンク設置。バズった後に自動化（Task #28）へ。",
   },
   {
     id: 23,
