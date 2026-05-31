@@ -22,10 +22,10 @@ const SYSTEM_STATUS = [
     title: "自動投稿",
     icon: "📡",
     items: [
-      { label: "00:30 JST", value: "✅ 設定済" },
-      { label: "05:30 JST", value: "✅ 設定済" },
-      { label: "13:30 JST", value: "✅ 設定済" },
-      { label: "パッケージ", value: "⚠️ UWPパス暫定" },
+      { label: "スケジューラー", value: "⛔ 停止中（X凍結対応）" },
+      { label: "X アカウント",   value: "🔴 凍結中 @bite_safe" },
+      { label: "異議申し立て",   value: "⏳ 申請済み・返答待ち" },
+      { label: "TikTok",        value: "✅ @safebite_jp 2/10本" },
     ],
     status: "warn" as const,
   },
@@ -35,8 +35,8 @@ const SYSTEM_STATUS = [
     items: [
       { label: "デプロイ先", value: "Vercel ✅" },
       { label: "用語集",     value: `${terms.length}語` },
-      { label: "OGP",        value: "✅ 設定済" },
-      { label: "SSR",        value: "✅ サーバーコンポーネント" },
+      { label: "メール受信", value: "✅ 稼働中" },
+      { label: "GA4",        value: "✅ キーイベント設定済" },
     ],
     status: "ok" as const,
   },
@@ -44,12 +44,12 @@ const SYSTEM_STATUS = [
     title: "API / セキュリティ",
     icon: "🔒",
     items: [
-      { label: "AI チェッカー", value: "✅ 稼働中" },
-      { label: "レートリミット", value: "⚠️ Redis 未設定" },
-      { label: "REDIS_URL",    value: "⬜ 要設定" },
-      { label: "DEV_PASSWORD", value: "✅ 設定済" },
+      { label: "AI チェッカー",   value: "✅ 稼働中" },
+      { label: "レートリミット",  value: "✅ Redis 設定済" },
+      { label: "メール認証",      value: "✅ Bearer Token" },
+      { label: "Email Worker",   value: "✅ Cloudflare 稼働中" },
     ],
-    status: "warn" as const,
+    status: "ok" as const,
   },
 ];
 
@@ -225,11 +225,11 @@ export default async function DevDashboard() {
         <section>
           <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Roadmap</h2>
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 font-mono text-xs text-slate-400 leading-loose">
-            <pre>{`今週   P1 コミット・デプロイ → Vercel環境変数確認
-今月   P2 UWPパス恒久修正 → Redis設定 → ログ整備
-来月   P3 用語集100語 → Schemaスキーマ → コンテンツ4本    ← 成長の主軸
-2ヶ月  P4 TikTok/YouTube Shorts 自動配信
-3ヶ月  P5 OSINT 脅威データベース（法務確認後）`}</pre>
+            <pre>{`今週   TikTok残り8本投稿 → X凍結の異議申し立て返答待ち
+今月   TikTok10本完成 → Instagram開設（リール流用）
+来月   PR Times プレスリリース → A8アフィリエイト最適化
+2ヶ月  警察庁リンク集申請 → LINE OpenChat開設
+3ヶ月  TikTok自動化 → OSINT脅威DB（法務確認後）`}</pre>
           </div>
         </section>
 
