@@ -475,6 +475,11 @@ export default function TaihoJireiPage() {
                 desc: "応募前〜仕事後まで段階別の断り方と対処法",
               },
               {
+                href: "/guide/shakkin-deguchi",
+                title: "借金で闇バイトに手を出す前に",
+                desc: "借金には合法の出口がある。債務整理・法テラスの使い方",
+              },
+              {
                 href: "/guide/hogosha",
                 title: "保護者・学校向けガイド",
                 desc: "子どもを闇バイトから守るための知識と対策",

@@ -284,6 +284,7 @@ export default function KotowarikatPage() {
             {[
               { href: "/guide/higai-soudan", title: "被害に遭ったらやること", desc: "相談窓口・証拠保全の手順" },
               { href: "/guide/taiho-jirei", title: "逮捕・判決事例まとめ", desc: "末端でも実刑になる現実" },
+              { href: "/guide/shakkin-deguchi", title: "借金で闇バイトに手を出す前に", desc: "債務整理・法テラスという合法の出口" },
               { href: "/glossary/yamibaitomiwakekata", title: "闇バイトの見分け方", desc: "5つのシグナルチェックリスト" },
             ].map((g) => (
               <Link key={g.href} href={g.href} className="group flex items-center justify-between bg-slate-50 hover:bg-red-50 border border-slate-100 hover:border-red-100 rounded-xl p-4 transition-all">
