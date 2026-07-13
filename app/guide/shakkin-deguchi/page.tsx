@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import DebtConsolidationCTA from "@/app/_components/DebtConsolidationCTA";
 
 const BASE_URL = "https://saferbite.org";
 const PAGE_URL = `${BASE_URL}/guide/shakkin-deguchi`;
@@ -275,6 +276,11 @@ export default function ShakkinDeguchiPage() {
           <p className="text-xs text-slate-400 mt-2">
             ※ 具体的な手続き・費用は状況により異なります。まず法テラスで無料相談を。
           </p>
+
+          {/* 民間の無料減額診断（PR） */}
+          <div className="mt-4">
+            <DebtConsolidationCTA position="shakkin_deguchi_seiri" />
+          </div>
         </section>
 
         {/* よくある誤解 */}

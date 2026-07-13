@@ -4,6 +4,8 @@ export const SHARE_TEXT = "【無料】そのバイト、大丈夫？AIが求人
 // A8.net
 export const A8_LAWYER_URL = "https://px.a8.net/svt/ejp?a8mat=4B3U72+7K3CQ2+4FR4+BXQOI";
 export const A8_NORTON_URL  = "https://px.a8.net/svt/ejp?a8mat=4B3U72+7OUTKA+3IBI+61C2Q";
+// 債務整理（2026-07-13 提携承認）。刑事系と異なり規制がクリーンで、借金→闇バイトの入口を断つミッションと整合。
+export const A8_SAIMUSEIRI_URL = "https://px.a8.net/svt/ejp?a8mat=4B8090+AI2IEI+4LX2+5YRHE";
 
 // ValueCommerce
 export const VC_ARUBAITO_EX_URL   = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3769365&pid=892612232";
