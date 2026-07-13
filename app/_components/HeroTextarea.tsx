@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { sendGA, incCounter } from "./tracking";
+import { A8_NORTON_URL } from "./constants";
 
 type Result = {
   score: number;
@@ -155,6 +156,28 @@ export default function HeroTextarea() {
                 </span>
               ))}
             </div>
+          )}
+
+          {/* score 70以上：スマホ保護（アフィリエイト） */}
+          {result.score >= 70 && (
+            <a
+              href={A8_NORTON_URL}
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              onClick={() => sendGA("affiliate_click", { affiliate: "norton", position: "hero_result" })}
+              className="flex items-center gap-3 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 rounded-xl p-4 mb-3 transition-all group text-left"
+            >
+              <span className="text-2xl flex-shrink-0">🛡️</span>
+              <div className="flex-1">
+                <div className="text-xs font-bold text-amber-500 mb-0.5">情報漏えいを防ぐために</div>
+                <div className="text-sm font-bold text-amber-400 group-hover:text-amber-300">
+                  スマホ・PCをウイルスから今すぐ守る（ノートン公式）→
+                </div>
+                <div className="text-xs text-slate-500 mt-0.5">
+                  闇バイト関与中はマルウェア感染リスクが高まります
+                </div>
+              </div>
+            </a>
           )}
 
           {/* 通報リンク */}
