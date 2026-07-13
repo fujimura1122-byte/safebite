@@ -47,6 +47,28 @@ const GUIDES = [
     accent: "border-white/10 hover:border-white/30 hover:bg-white/5",
     ctaColor: "text-slate-400 group-hover:text-slate-200",
   },
+  {
+    href: "/guide/fukugyo-sagi",
+    emoji: "📱",
+    tag: "副業詐欺",
+    tagColor: "bg-amber-500/20 text-amber-300 border-amber-500/20",
+    title: "副業詐欺の手口と見分け方",
+    desc: "「スマホで簡単に稼げる」の罠。6つの手口・見分けチェックリスト・返金相談先まで",
+    cta: "手口を見抜く →",
+    accent: "border-amber-500/20 hover:border-amber-500/50 hover:bg-white/5",
+    ctaColor: "text-amber-400 group-hover:text-amber-300",
+  },
+  {
+    href: "/guide/shakkin-deguchi",
+    emoji: "💸",
+    tag: "借金の出口",
+    tagColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/20",
+    title: "借金で闇バイトに手を出す前に",
+    desc: "借金には合法の出口がある——債務整理・法テラス・公的貸付という4つの選択肢",
+    cta: "出口を確認する →",
+    accent: "border-indigo-500/20 hover:border-indigo-500/50 hover:bg-white/5",
+    ctaColor: "text-indigo-400 group-hover:text-indigo-300",
+  },
 ];
 
 export default function GuideSection() {

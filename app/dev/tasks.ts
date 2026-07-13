@@ -284,6 +284,14 @@ export const TASKS: Task[] = [
     detail: "shakkin-deguchi等の受け皿に債務整理アフィリを設置するため、A8.netで債務整理プログラムに提携し、素材コード（インプ計測用0.gifピクセル含む）を取得。取得後にClaudeがCTA実装。刑事系（弁護士）は規制リスクのため使わない。",
   },
   {
+    id: 41,
+    priority: "P3",
+    status: "done",
+    title: "横展開記事第2弾 /guide/fukugyo-sagi 作成",
+    detail: "「副業詐欺の手口と見分け方」を新規作成。「副業 稼げる/副業 詐欺 見分け方」で検索する闇バイト予備軍を捕捉し、安全な求人（アルバイトEX）への導線に接続。6手口・チェックリスト・返金相談先（消費者ホットライン188）・FAQ JSON-LD。ホームGuideSectionに副業詐欺+借金の2カードを追加しトップから内部リンク。sitemap登録。",
+    completedAt: "2026-07-13",
+  },
+  {
     id: 40,
     priority: "P4",
     status: "todo",
