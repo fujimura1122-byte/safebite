@@ -253,10 +253,15 @@ saferbite.org
 
 ---
 
-## 現在のタスク優先順位（2026-05-26時点）
+## 現在のタスク優先順位（2026-07-13時点）
 
-1. **TikTok 残り8本投稿**（最優先・X凍結の穴を埋める）
-2. **Google Search Console に saferbite.org を正しく登録**
-3. **X 異議申し立ての返答を待つ**（待つだけ）
-4. Instagram 開設（TikTok動画を流用、コスト低）
-5. PR Times プレスリリース（TikTok10本完成後）
+✅ SEO施策5本完了（usagiページ・taiho-jirei強化・直帰率改善・robots.ts・AEOボックス）
+
+1. **Bing Webmaster Tools に saferbite.org を登録**（手動作業）
+   → https://www.bing.com/webmasters → サイト追加 → sitemap: https://saferbite.org/sitemap.xml
+2. **Google Search Console に saferbite.org を正しく登録**（手動作業）
+   → DNS TXTレコードで認証 → sitemap送信
+3. **TikTok 残り8本投稿**
+4. **X 異議申し立ての返答を待つ**（待つだけ）
+5. Instagram 開設（TikTok動画を流用、コスト低）
+6. PR Times プレスリリース（TikTok10本完成後）

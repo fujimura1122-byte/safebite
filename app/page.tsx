@@ -1,5 +1,6 @@
 // サーバーコンポーネント — "use client" なし
 // ヒーローの静的コンテンツ（h1・説明文・統計）はSSRで描画される
+import Link           from "next/link";
 import NavBar         from "./_components/NavBar";
 import HeroTextarea   from "./_components/HeroTextarea";
 import HeroSubActions from "./_components/HeroSubActions";
@@ -151,6 +152,79 @@ export default function Home() {
 
           {/* クライアントアイランド: ライブカウンター */}
           <ImpactCounter />
+        </div>
+      </section>
+
+      {/* ── 最近の逮捕事例（ヒーロー直下）─────────────────── */}
+      <section className="bg-slate-900 border-t border-slate-800 py-10 px-4">
+        <div className="max-w-2xl mx-auto">
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-5 text-center">
+            最近の逮捕事例 — 他人事ではありません
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            {[
+              {
+                year: "2025年",
+                role: "受け子（うさぎ）",
+                age: "20歳・大学生",
+                verdict: "懲役3年（実刑）",
+                how: "X(旧Twitter)の「うさぎさん募集」に応募",
+              },
+              {
+                year: "2025年",
+                role: "出し子",
+                age: "19歳・フリーター",
+                verdict: "懲役4年（実刑）",
+                how: "TikTok DMで「ATM引き出しだけ」と勧誘",
+              },
+              {
+                year: "2026年",
+                role: "架け子",
+                age: "17歳・高校生",
+                verdict: "少年院送致",
+                how: "Discord で「電話かけるだけ」と誘われた",
+              },
+            ].map((c) => (
+              <div key={c.role} className="bg-slate-800/60 border border-slate-700 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2 flex-wrap">
+                  <span className="text-xs text-slate-500">{c.year}</span>
+                  <span className="text-xs font-bold text-red-400 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded-full">
+                    {c.role}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 mb-2 leading-relaxed">{c.how}</p>
+                <p className="text-sm font-black text-red-400">{c.verdict}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{c.age}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
+            <Link
+              href="/guide/taiho-jirei"
+              className="text-xs text-slate-400 hover:text-white border border-slate-700 hover:border-slate-500 px-4 py-2 rounded-lg transition-all inline-flex items-center gap-1"
+            >
+              逮捕・判決事例をもっと見る →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 社会的証明 ───────────────────────────────────── */}
+      <section className="bg-white border-b border-slate-100 py-8 px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            {[
+              { n: "1,000人超", label: "2024年 闇バイト逮捕者" },
+              { n: "2,000億円", label: "2024年 詐欺被害総額" },
+              { n: "10代の3割", label: "闇バイト募集を目撃" },
+              { n: "初犯でも実刑", label: "受け子・出し子の現実" },
+            ].map(({ n, label }) => (
+              <div key={n}>
+                <div className="text-xl font-black text-red-600 mb-1">{n}</div>
+                <div className="text-xs text-slate-500 leading-tight">{label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -257,6 +257,22 @@ $OutputEncoding = [System.Text.Encoding]::ASCII
 
 ---
 
+## SEO・AEO施策（2026-07-13実施）
+
+| ページ | 施策内容 |
+|--------|---------|
+| `/glossary/usagi` | 新規作成。専用ページ（語源・募集文例・罰則・チェックリスト・断り方・関連隠語）。FAQ+Article+BreadcrumbList JSON-LD。terms.tsにも追記 |
+| `/guide/taiho-jirei` | タイトルに「2026年最新」追加。「最終更新：2026年7月」テキスト追加。内部リンク（受け子・出し子・うさぎ）。「一言で言うと」ボックス追加 |
+| `app/page.tsx` | HeroTextareaをスタンドアロン化（スクロール不要でヒーロー内判定）。逮捕事例3件・社会的証明セクション追加 |
+| `app/robots.ts` | 新規作成。`/dev/`・`/api/` 除外、sitemap URL・host 指定 |
+| 全ガイドページ | H1直下に「一言で言うと」AEOボックス追加（4ページ） |
+
+**次のSEOアクション（手動対応）:**
+- Bing Webmaster Tools に `saferbite.org` を登録して sitemap を送信
+- Google Search Console に `saferbite.org` を正しく登録（DNS TXTレコード認証）
+
+---
+
 ## 既知の問題・注意事項
 
 1. **PowerShell BOM問題**: `echo` や通常のパイプでシークレットを設定するとUTF-8 BOMが混入する。必ず `$OutputEncoding = [System.Text.Encoding]::ASCII` を先に実行すること。

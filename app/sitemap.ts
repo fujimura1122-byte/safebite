@@ -77,7 +77,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}/guide/taiho-jirei`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
-      priority: 0.8,
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/glossary/usagi`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
     },
     ...glossaryPages,
   ];

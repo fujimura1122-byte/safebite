@@ -172,6 +172,15 @@ export default function KotowarikatPage() {
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-4">
             闇バイトの<br className="sm:hidden" />断り方・辞め方
           </h1>
+
+          {/* 一言で言うと（AEO・AI検索最適化） */}
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-6">
+            <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">一言で言うと</div>
+            <p className="text-base font-bold text-slate-800 leading-snug">
+              「法律の専門家に相談します」と伝えてすぐにブロック・連絡を断つ。脅しは脅迫罪なので怖がらなくてよい。
+            </p>
+          </div>
+
           <p className="text-slate-600 text-base leading-relaxed mb-6">
             「断ったら家族に連絡する」「個人情報は把握している」——これは闇バイトグループが関与者を辞めさせないための
             <strong className="text-slate-900">常套手段（脅迫罪）</strong>です。<br />

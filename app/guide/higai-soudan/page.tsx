@@ -291,6 +291,15 @@ export default function HigaiSoudanPage() {
         <h1 className="text-3xl sm:text-4xl font-black text-slate-900 leading-tight tracking-tight mb-3">
           闇バイト被害に遭ったら<br />最初にやること
         </h1>
+
+        {/* 一言で言うと（AEO・AI検索最適化） */}
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-6">
+          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">一言で言うと</div>
+          <p className="text-base font-bold text-slate-800 leading-snug">
+            まず証拠を保全し、警察（#9110）または弁護士（法テラス 0570-078374）に相談する。自首すれば量刑が軽くなる可能性がある。
+          </p>
+        </div>
+
         <p className="text-slate-600 text-sm leading-relaxed mb-8">
           「知らずに関わってしまった」「断れずに仕事をしてしまった」「個人情報を送ってしまった」——
           一人で抱え込まないでください。<br />

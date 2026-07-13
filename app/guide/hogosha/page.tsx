@@ -226,6 +226,15 @@ export default function HogoshaPage() {
         <h1 className="text-3xl sm:text-4xl font-black text-slate-900 leading-tight tracking-tight mb-3">
           闇バイトから子どもを<br />守るためのガイド
         </h1>
+
+        {/* 一言で言うと（AEO・AI検索最適化） */}
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-6">
+          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">一言で言うと</div>
+          <p className="text-base font-bold text-slate-800 leading-snug">
+            日頃から「高収入バイトは疑う」「断っていい」と伝えておく。危険なサインは突然の現金・夜間外出・SNSで知り合った人との急接触。
+          </p>
+        </div>
+
         <p className="text-slate-600 text-sm leading-relaxed mb-10">
           2024〜2025年、闇バイトによる10代の逮捕者数が急増しています。
           <strong className="text-slate-800">「知らなかった」では済まない</strong>犯罪に、

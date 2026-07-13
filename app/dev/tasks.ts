@@ -217,6 +217,48 @@ export const TASKS: Task[] = [
     detail: "Norton / 弁護士LP へのリンクを戦略的配置。チェッカー結果画面のスコア70以上で Norton 表示（実装済み）。GuideSection CTAにも追加。月額固定費の自己調達を目指す。",
   },
 
+  // ── P3 SEO施策（2026-07-13 GA4分析に基づく）────────────────────
+  {
+    id: 32,
+    priority: "P3",
+    status: "done",
+    title: "「うさぎ」隠語ページ新規作成 /glossary/usagi",
+    detail: "Search Consoleで161表示・0クリック・11位のキーワード「闇バイト 隠語 うさぎ」向けに専用ページを作成。語源・募集文例・罰則・チェックリスト・断り方・関連隠語のH2構成。FAQ JSON-LD・Article JSON-LD・BreadcrumbList追加。terms.tsにも追記しサイトマップ自動反映。",
+    completedAt: "2026-07-13",
+  },
+  {
+    id: 33,
+    priority: "P3",
+    status: "done",
+    title: "/guide/taiho-jirei SEO強化（CTR向上）",
+    detail: "タイトルに「2026年最新」を追加（CTR22.6%→向上狙い）。「最終更新：2026年7月」テキスト追加。内部リンク（受け子・出し子・うさぎ）追加。/glossary/usagi を関連ガイドに追加。dateModified を2026-07-13に更新。「一言で言うと」AEOボックス追加。",
+    completedAt: "2026-07-13",
+  },
+  {
+    id: 34,
+    priority: "P3",
+    status: "done",
+    title: "トップページ直帰率改善（HeroTextarea内判定表示）",
+    detail: "HeroTextareaをスタンドアロン化。判定ボタン押下でスクロール不要・ヒーロー内に結果表示（スコアバー・理由・アドバイス・キーワード・通報リンク）。ヒーロー直下に最近の逮捕事例3件セクション＋社会的証明（統計数値）セクションを追加。直帰率82%の改善を狙う。",
+    completedAt: "2026-07-13",
+  },
+  {
+    id: 35,
+    priority: "P3",
+    status: "done",
+    title: "Bing SEO最適化（robots.ts・sitemap優先度調整）",
+    detail: "app/robots.tsを新規作成（全クローラーOK、/dev/ /api/ は除外、sitemap URLとhost指定）。/guide/taiho-jirei と /glossary/usagi のsitemap優先度を0.9に設定。Bing Webmaster Toolsへの手動登録は別途対応。",
+    completedAt: "2026-07-13",
+  },
+  {
+    id: 36,
+    priority: "P3",
+    status: "done",
+    title: "AEO（AI検索最適化）全ガイドページに「一言で言うと」ボックス追加",
+    detail: "kotowarikata・higai-soudan・taiho-jirei・hogoshaの4ページH1直下に「一言で言うと」ボックスを追加。Bing/CopilotのAI検索で直接回答として引用されやすい形式。/glossary/usagiには作成時から組み込み済み。",
+    completedAt: "2026-07-13",
+  },
+
   // ── P5 将来フェーズ（3ヶ月以降）──────────────────────────────
   {
     id: 30,

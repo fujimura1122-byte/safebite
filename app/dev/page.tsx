@@ -33,12 +33,14 @@ const SYSTEM_STATUS = [
     title: "サイト",
     icon: "🌐",
     items: [
-      { label: "デプロイ先", value: "Vercel ✅" },
-      { label: "用語集",     value: `${terms.length}語` },
-      { label: "メール受信", value: "✅ 稼働中" },
-      { label: "GA4",        value: "✅ キーイベント設定済" },
+      { label: "デプロイ先",       value: "Vercel ✅" },
+      { label: "用語集",           value: `${terms.length}語（usagi追加済）` },
+      { label: "メール受信",       value: "✅ 稼働中" },
+      { label: "GA4",              value: "✅ キーイベント設定済" },
+      { label: "robots.txt",       value: "✅ 2026-07-13 作成済" },
+      { label: "Search Console",   value: "⚠️ saferbite.org を手動登録要" },
     ],
-    status: "ok" as const,
+    status: "warn" as const,
   },
   {
     title: "API / セキュリティ",
@@ -225,7 +227,8 @@ export default async function DevDashboard() {
         <section>
           <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Roadmap</h2>
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 font-mono text-xs text-slate-400 leading-loose">
-            <pre>{`今週   TikTok残り8本投稿 → X凍結の異議申し立て返答待ち
+            <pre>{`✅完了  SEO施策5本（usagi・taiho-jirei・直帰率・Bing・AEO）
+今週   Search Console に saferbite.org を登録 → TikTok残り8本
 今月   TikTok10本完成 → Instagram開設（リール流用）
 来月   PR Times プレスリリース → A8アフィリエイト最適化
 2ヶ月  警察庁リンク集申請 → LINE OpenChat開設

@@ -4,16 +4,16 @@ import Link from "next/link";
 const BASE_URL = "https://saferbite.org";
 
 export const metadata: Metadata = {
-  title: "闇バイト逮捕・判決事例まとめ｜「知らなかった」では済まない現実｜SafeBite",
+  title: "【2026年最新】闇バイト逮捕・判決事例まとめ｜実刑判決の実態｜SafeBite",
   description:
-    "闇バイトで逮捕・起訴された実際の事例と判決内容をまとめています。「アルバイトと思っていた」「指示に従っただけ」でも懲役刑が確定した事例多数。関与前に必ず確認を。",
+    "2026年最新の闇バイト逮捕・判決事例を役割別に解説。受け子・出し子・指示役の典型的な懲役年数と「バイトと思っていた」が通らない理由も掲載。関与前に必ず確認を。",
   keywords:
-    "闇バイト 逮捕 事例,闇バイト 判決,受け子 逮捕,出し子 懲役,闇バイト 刑事罰,闇バイト 知らなかった 逮捕,闇バイト 懲役 何年",
+    "闇バイト 逮捕 事例 2026,闇バイト 判決,受け子 逮捕,出し子 懲役,闇バイト 刑事罰,闇バイト 知らなかった 逮捕,闇バイト 懲役 何年,うさぎ 逮捕",
   alternates: { canonical: "/guide/taiho-jirei" },
   openGraph: {
-    title: "闇バイト逮捕・判決事例まとめ｜「知らなかった」では済まない現実",
+    title: "【2026年最新】闇バイト逮捕・判決事例まとめ｜実刑判決の実態",
     description:
-      "「アルバイトと思っていた」でも懲役刑。闇バイトによる実際の逮捕・判決事例をまとめました。",
+      "「バイトと思っていた」でも実刑。2026年最新の闇バイト逮捕・判決事例を役割別にまとめました。",
     url: `${BASE_URL}/guide/taiho-jirei`,
     siteName: "SafeBite",
     locale: "ja_JP",
@@ -32,11 +32,11 @@ export const metadata: Metadata = {
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "闇バイト逮捕・判決事例まとめ｜「知らなかった」では済まない現実",
+  headline: "【2026年最新】闇バイト逮捕・判決事例まとめ｜実刑判決の実態",
   description:
-    "闇バイトで逮捕・起訴された実際の事例と判決内容をまとめています。",
+    "2026年最新の闇バイト逮捕・判決事例を役割別に解説。受け子・出し子・指示役の典型的な懲役年数を掲載。",
   url: `${BASE_URL}/guide/taiho-jirei`,
-  dateModified: "2026-05-21T00:00:00+09:00",
+  dateModified: "2026-07-13T00:00:00+09:00",
   image: {
     "@type": "ImageObject",
     url: `${BASE_URL}/opengraph-image`,
@@ -265,12 +265,25 @@ export default function TaihoJireiPage() {
           </p>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 leading-tight tracking-tight mb-3">
+        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 leading-tight tracking-tight mb-2">
           闇バイト逮捕・判決<br />事例まとめ
         </h1>
+        <p className="text-xs text-slate-400 mb-4">最終更新：2026年7月</p>
+
+        {/* 一言で言うと（AEO・AI検索最適化） */}
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-6">
+          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">一言で言うと</div>
+          <p className="text-base font-bold text-slate-800 leading-snug">
+            「バイトだと思っていた」「1回だけ」は無罪にならない。受け子・出し子・指示役いずれも初犯から懲役3〜7年の実刑が現実に確定している。
+          </p>
+        </div>
+
         <p className="text-slate-600 text-sm leading-relaxed mb-10">
-          2024〜2025年に急増した闇バイト逮捕事例の中から、特に教訓になる事例を役割別に紹介します。
+          2024〜2026年に急増した闇バイト逮捕事例の中から、特に教訓になる事例を役割別に紹介します。
           <strong className="text-slate-800">「1回だけ」「知らなかった」は通用しません。</strong>
+          <Link href="/glossary/ukeko" className="underline decoration-dotted hover:text-red-600 transition-colors">受け子</Link>・
+          <Link href="/glossary/dashiko" className="underline decoration-dotted hover:text-red-600 transition-colors">出し子</Link>・
+          <Link href="/glossary/usagi" className="underline decoration-dotted hover:text-red-600 transition-colors">うさぎ</Link>など隠語の意味は各リンクで確認できます。
         </p>
 
         {/* 統計 */}
@@ -459,6 +472,11 @@ export default function TaihoJireiPage() {
                 href: "/guide/hogosha",
                 title: "保護者・学校向けガイド",
                 desc: "子どもを闇バイトから守るための知識と対策",
+              },
+              {
+                href: "/glossary/usagi",
+                title: "「うさぎ」とは？— 受け子を指す隠語",
+                desc: "SNSで急増中の「うさぎ案件」の意味・罰則・断り方を解説",
               },
               {
                 href: "/glossary",
