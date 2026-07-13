@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LawyerCTA from "@/app/_components/LawyerCTA";
 
 const BASE_URL = "https://saferbite.org";
 
@@ -368,7 +369,7 @@ export default function HigaiSoudanPage() {
 
         {/* 相談窓口 */}
         <h2 className="text-xl font-black text-slate-900 mb-4">無料相談窓口まとめ</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
           {CONTACTS.map((c) => (
             <div key={c.name} className={`${c.color} rounded-2xl p-5 text-white`}>
               <p className="text-xs font-bold opacity-80 mb-1">{c.name}</p>
@@ -377,6 +378,11 @@ export default function HigaiSoudanPage() {
               <p className="text-xs opacity-90 leading-relaxed">{c.note}</p>
             </div>
           ))}
+        </div>
+
+        {/* 弁護士検索（アフィリエイト） */}
+        <div className="mb-12">
+          <LawyerCTA position="higai_soudan" />
         </div>
 
         {/* よくある不安 */}

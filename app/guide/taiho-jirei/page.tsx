@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LawyerCTA from "@/app/_components/LawyerCTA";
 
 const BASE_URL = "https://saferbite.org";
 
@@ -425,7 +426,7 @@ export default function TaihoJireiPage() {
         </section>
 
         {/* 相談窓口 */}
-        <div className="bg-red-600 rounded-2xl p-6 text-white text-center mb-8">
+        <div className="bg-red-600 rounded-2xl p-6 text-white text-center mb-4">
           <p className="text-sm font-bold mb-1">関わってしまったと感じたら、今すぐ相談を</p>
           <p className="text-4xl font-black mb-1 tracking-widest">#9110</p>
           <p className="text-xs opacity-80 mb-3">警察安全相談電話 — 24時間対応</p>
@@ -433,6 +434,11 @@ export default function TaihoJireiPage() {
             弁護士への相談は<strong>法テラス 0570-078374</strong>（平日9〜21時）へ。<br />
             相談するだけでは逮捕されません。早期相談が最善の選択です。
           </p>
+        </div>
+
+        {/* 弁護士検索（アフィリエイト） */}
+        <div className="mb-8">
+          <LawyerCTA position="taiho_jirei" />
         </div>
 
         {/* CTA */}

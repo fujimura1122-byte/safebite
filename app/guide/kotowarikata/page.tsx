@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LawyerCTA from "@/app/_components/LawyerCTA";
 
 export const metadata: Metadata = {
   title: "闇バイトの断り方・辞め方｜脅されても安全に抜け出す方法【相談先付き】｜SafeBite",
@@ -268,6 +269,11 @@ export default function KotowarikatPage() {
                 <p className="text-xs text-slate-500 leading-relaxed">{c.desc}</p>
               </div>
             ))}
+          </div>
+
+          {/* 弁護士検索（アフィリエイト） */}
+          <div className="mt-4">
+            <LawyerCTA position="kotowarikata" />
           </div>
         </section>
 
