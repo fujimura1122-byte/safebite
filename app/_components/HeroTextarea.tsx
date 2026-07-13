@@ -49,8 +49,8 @@ export default function HeroTextarea() {
       setResult(data);
       incCounter("ai_checks");
       sendGA("ai_check", { score: data.score, verdict: data.verdict });
-      // 他セクション（CheckerSection）にも同期
-      window.dispatchEvent(new CustomEvent("safebite:check", { detail: { text } }));
+      // 注意: safebite:check を dispatch すると CheckerSection が再分析して
+      // Claude API が二重課金されるため、ヒーロー内で完結させる
     } catch {
       setError("分析中にエラーが発生しました。再度お試しください。");
     } finally {
