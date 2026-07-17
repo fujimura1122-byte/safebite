@@ -325,16 +325,17 @@ export const TASKS: Task[] = [
   {
     id: 46,
     priority: "P2",
-    status: "todo",
-    title: "【オーナー】Search Console に saferbite.org を登録（最優先）",
-    detail: "現在 saferbite-zeta.vercel.app（誤り）のみ登録。①search.google.com/search-console →「プロパティを追加」→ドメイン→ saferbite.org ②表示されるTXTレコードをCloudflare DNSに追加 ③確認後 sitemap送信: https://saferbite.org/sitemap.xml。Google流入8人/月の改善はここが前提。",
+    status: "done",
+    title: "Search Console: sitemap再送信＋新ページのインデックス確認（Claude in Chromeで実施）",
+    detail: "調査の結果 saferbite.org は登録済みだった（誤登録の前提が古かった）。sitemap.xml を再送信し検出104→113ページに更新。URL検査の結果: /shindan・/guide/fukugyo-sagi・/guide/shakkin-deguchi は当日中にインデックス登録済みを確認。/glossary/usagi は未登録だったため「インデックス登録をリクエスト」実行（優先クロールキュー入り）。",
+    completedAt: "2026-07-17",
   },
   {
     id: 47,
     priority: "P3",
-    status: "todo",
-    title: "【オーナー】Bing Webmaster Tools 登録",
-    detail: "流入の69%がBingなのに未登録。bing.com/webmasters → Search Consoleからのインポートが最速（#46完了後にワンクリック連携可）。",
+    status: "in-progress",
+    title: "Bing Webmaster Tools 登録（オーナーのログイン待ち）",
+    detail: "流入の69%がBingなのに未登録。bing.com/webmasters は未ログインのためClaudeでは認証不可。【オーナー】MicrosoftまたはGoogleアカウントでログインだけ実施 → 以降のサイト追加・GSCインポートはClaudeが代行可能。",
   },
   {
     id: 48,
