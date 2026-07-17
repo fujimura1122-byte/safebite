@@ -341,7 +341,7 @@ export const TASKS: Task[] = [
     priority: "P3",
     status: "todo",
     title: "【オーナー】監修者の確保（弁護士 or 元警察官）",
-    detail: "YMYLで最大のSEOレバー。知人・地元の弁護士会・法テラス経由などで「記事監修」として名前掲載の許可をもらう。獲得後、Claudeが監修者表記+Person схемаを全記事に実装。",
+    detail: "YMYLで最大のSEOレバー。知人・地元の弁護士会・法テラス経由などで「記事監修」として名前掲載の許可をもらう。獲得後、Claudeが監修者表記+Person schemaを全記事に実装。",
   },
   {
     id: 49,
