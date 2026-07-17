@@ -79,8 +79,9 @@ saferbite.org/
 │   │   └── _components/
 │   │       ├── EmailSection.tsx   # メール受信箱UI
 │   │       └── MonitorSection.tsx # X監視パネルUI
-│   ├── glossary/               # 闇バイト隠語辞典（100語）
-│   ├── guide/                  # コンテンツページ群
+│   ├── glossary/               # 闇バイト隠語辞典（100語 + usagi専用ページ）
+│   ├── guide/                  # コンテンツページ群（taiho-jirei / kotowarikata / higai-soudan / hogosha / shakkin-deguchi / fukugyo-sagi）
+│   ├── shindan/                # 危険度セルフ診断（5問クイズ・API不使用・シェア機能付き）
 │   ├── contact/                # お問い合わせフォーム
 │   ├── about/                  # 運営者情報
 │   ├── privacy/                # プライバシーポリシー
@@ -205,8 +206,10 @@ saveInbound() → Redis 保存
 - カスタムイベント（`sendGA(eventName, params)`で送信）:
   - `ai_check` — チェッカー結果
   - `checker_started` — チェック開始
-  - `share` — シェア
-  - `affiliate_click` — アフィリエイトリンク
+  - `shindan_started` / `shindan_completed` — /shindan セルフ診断（score, verdict付き）
+  - `share` — シェア（method: x/line, position付き）
+  - `affiliate_click` — アフィリエイトリンク（affiliate: norton/arubaito_ex/saimuseiri, position付き）
+  - `public_resource_click` — 公的機関リンク（法テラス等）
   - `contact_submitted` — 問い合わせ送信
   - `ihc_link_opened` — IHCリンク
   - `police_link_opened` — 警察リンク
@@ -282,3 +285,7 @@ $OutputEncoding = [System.Text.Encoding]::ASCII
 3. **wrangler deployのworkers.devエラー**: `You can either deploy your worker to one or more routes...` というエラーが出るが、Email Workerには不要なので無視してよい。`Uploaded` が表示されれば成功。
 
 4. **Google Search Console**: 現在 `saferbite-zeta.vercel.app`（Vercelプレビュー）が登録されている。`saferbite.org` を正しく登録する必要あり（DNS TXTレコードで認証）。
+
+5. **アフィリエイトの方針（2026-07-13確定）**: 弁護士（刑事）アフィリエイトは弁護士法13条/72条の懲戒リスクがあるため**使用禁止**（LawyerCTA は法テラスへの非アフィリ導線）。使用するのは債務整理（A8_SAIMUSEIRI_URL・DebtConsolidationCTA・PR表記+rel=sponsored 必須）・アルバイトEX・ノートンのみ。詳細はメモリ `safebite-monetization-strategy` 参照。
+
+6. **E-E-A-T（出典表示）**: YMYLサイトのため、記事ページには `app/_components/Sources.tsx` の `<Sources items={[GOV_SOURCES.xxx]} />` で公的一次情報への出典を必ず表示する。新規記事作成時も同様。編集方針は /about#editorial に公開済み。

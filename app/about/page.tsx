@@ -189,6 +189,41 @@ export default function AboutPage() {
             </div>
           </section>
 
+          {/* 編集・情報作成方針 */}
+          <section id="editorial">
+            <SectionHeading label="Editorial" title="編集・情報作成方針" />
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                当サイトの記事（隠語辞典・逮捕事例・各種ガイド）は、
+                <strong className="text-slate-800">警察庁・こども家庭庁・文部科学省の公表資料および法令（e-Gov法令検索）</strong>
+                といった公的な一次情報に基づき、SafeBite編集部が作成しています。
+                掲載する逮捕事例は、報道および警察庁統計をもとにした
+                <strong className="text-slate-800">典型例</strong>であり、特定の個人を示すものではありません。
+              </p>
+              <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3">主な参照元（公的一次情報）</p>
+              <ul className="flex flex-col gap-2">
+                {[
+                  { label: "刑法（詐欺罪・窃盗罪等）", org: "e-Gov法令検索", url: "https://laws.e-gov.go.jp/law/140AC0000000045" },
+                  { label: "特殊詐欺の認知・検挙状況等について", org: "警察庁", url: "https://www.npa.go.jp/publications/statistics/sousa/sagi.html" },
+                  { label: "特殊詐欺対策（有害求人への注意喚起）", org: "警察庁", url: "https://www.npa.go.jp/bureau/sosikihanzai/tokushusagi.html" },
+                  { label: "青少年の「闇バイト」への加担を防止するための取組", org: "こども家庭庁", url: "https://www.cfa.go.jp/policies/youth-kankyou/yami-baito" },
+                  { label: "青少年を「闇バイト」に加担させないための取組", org: "文部科学省", url: "https://www.mext.go.jp/a_menu/sports/ikusei/mext_02920.html" },
+                ].map((s) => (
+                  <li key={s.url} className="text-xs leading-relaxed">
+                    <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-bold">
+                      {s.label}
+                    </a>
+                    <span className="text-slate-400"> — {s.org}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-slate-400 leading-relaxed mt-4">
+                情報は作成時点のものであり、最新かつ正確な内容は各機関の公式サイトをご参照ください。
+                誤りのご指摘は<Link href="/contact" className="text-slate-500 underline hover:text-slate-700">お問い合わせ</Link>より承ります。
+              </p>
+            </div>
+          </section>
+
           {/* 運営者情報 */}
           <section>
             <SectionHeading label="Operator" title="運営者情報" />

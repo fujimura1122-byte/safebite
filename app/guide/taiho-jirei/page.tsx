@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LawyerCTA from "@/app/_components/LawyerCTA";
+import Sources, { GOV_SOURCES } from "@/app/_components/Sources";
 
 const BASE_URL = "https://saferbite.org";
 
@@ -509,6 +510,11 @@ export default function TaihoJireiPage() {
             ))}
           </div>
         </div>
+
+        <Sources
+          items={[GOV_SOURCES.keihou, GOV_SOURCES.npaStats, GOV_SOURCES.npaTokushu, GOV_SOURCES.sos47]}
+          note="※ 掲載事例は上記の報道・警察庁統計をもとに作成した典型例であり、特定の個人を示すものではありません。個別の量刑は事案により異なります。"
+        />
       </main>
 
       <footer className="bg-slate-950 text-slate-500 py-8 px-4 text-center text-sm mt-12">

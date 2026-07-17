@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import DebtConsolidationCTA from "@/app/_components/DebtConsolidationCTA";
+import Sources, { GOV_SOURCES } from "@/app/_components/Sources";
 
 const BASE_URL = "https://saferbite.org";
 const PAGE_URL = `${BASE_URL}/guide/shakkin-deguchi`;
@@ -361,6 +362,9 @@ export default function ShakkinDeguchiPage() {
             ))}
           </div>
         </div>
+        <Sources
+          items={[GOV_SOURCES.houterasu, GOV_SOURCES.cfa, GOV_SOURCES.npaTokushu]}
+        />
       </main>
 
       <footer className="bg-slate-950 text-slate-500 py-8 px-4 text-center text-sm mt-12">

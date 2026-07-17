@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Sources, { GOV_SOURCES } from "@/app/_components/Sources";
 
 const BASE_URL = "https://saferbite.org";
 const PAGE_URL = `${BASE_URL}/guide/fukugyo-sagi`;
@@ -366,6 +367,10 @@ export default function FukugyoSagiPage() {
             ))}
           </div>
         </div>
+        <Sources
+          items={[GOV_SOURCES.npaTokushu, GOV_SOURCES.sos47, GOV_SOURCES.keihou]}
+          note="※ 消費者トラブルの相談は消費者ホットライン（188）へ。"
+        />
       </main>
 
       <footer className="bg-slate-950 text-slate-500 py-8 px-4 text-center text-sm mt-12">
