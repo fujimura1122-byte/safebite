@@ -333,9 +333,10 @@ export const TASKS: Task[] = [
   {
     id: 47,
     priority: "P3",
-    status: "in-progress",
-    title: "Bing Webmaster Tools 登録（オーナーのログイン待ち）",
-    detail: "流入の69%がBingなのに未登録。bing.com/webmasters は未ログインのためClaudeでは認証不可。【オーナー】MicrosoftまたはGoogleアカウントでログインだけ実施 → 以降のサイト追加・GSCインポートはClaudeが代行可能。",
+    status: "done",
+    title: "【見送り】Bing Webmaster Tools 登録",
+    detail: "オーナー判断で見送り（2026-07-17。Microsoftアカウントを作りたくないため）。実害は小さい: Bingは未登録でも既に十分クロールしており流入の69%を占める。登録の利点は順位データの可視化とインデックス高速化のみ。将来必要になったら再検討。",
+    completedAt: "2026-07-17",
   },
   {
     id: 48,
