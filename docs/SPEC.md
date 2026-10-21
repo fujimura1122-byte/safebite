@@ -223,9 +223,18 @@ saveInbound() → Redis 保存
 - スクリプト: `scripts/x_broadcast.py`
 - スケジューラー: Windows タスクスケジューラー（現在Disabled）
   - SafeBite_Broadcast_0030 / 0530 / 1330
-- 監視スクリプト: `scripts/x_monitor.py`（SafeBite_Monitor、継続稼働中）
+- 監視スクリプト: `scripts/x_monitor.py`（SafeBite_Monitor、**2026-10-21にオーナー判断で一時停止＝Disabled**）
 
-**再開手順**: タスクスケジューラーで各タスクを Enable に変更
+**現在、4タスクすべてDisabled**（Broadcast 3本 + Monitor 1本）。
+通報の自動取得（X監視）は止まっており、/dev の Monitor パネルに新規投稿は入らない。
+既存の検知済みデータはRedisに残っているため閲覧・ステータス更新は可能。
+
+**再開手順**:
+```powershell
+schtasks /Change /TN "SafeBite_Monitor" /ENABLE          # 通報の自動取得を再開
+schtasks /Change /TN "SafeBite_Broadcast_0030" /ENABLE   # X自動投稿（凍結解除後のみ）
+```
+または タスクスケジューラー（Win+R → `taskschd.msc`）で各タスクを右クリック→有効化。
 
 ---
 

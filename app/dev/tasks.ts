@@ -353,6 +353,22 @@ export const TASKS: Task[] = [
     detail: ".go.jp被リンクはTikTok1万再生よりSEOに効く。候補: こども家庭庁・都道府県警サイバー窓口・自治体消費生活センター・教育委員会。お問い合わせフォームから「闇バイト対策の無料公益ツールとして紹介いただけないか」と打診。",
   },
   {
+    id: 50,
+    priority: "P3",
+    status: "done",
+    title: "通報の自動取得（X監視）を一時停止",
+    detail: "オーナー判断により SafeBite_Monitor タスクを Disabled に変更（2026-10-21）。これで Broadcast 3本と合わせ SafeBite 系4タスクすべてが停止状態。/dev の Monitor パネルに新規検知投稿は入らなくなるが、Redis上の既存データは閲覧・ステータス更新とも可能。再開は `schtasks /Change /TN \"SafeBite_Monitor\" /ENABLE`（詳細は docs/SPEC.md）。",
+    completedAt: "2026-10-21",
+  },
+  {
+    id: 51,
+    priority: "P3",
+    status: "done",
+    title: "PHP緊急CVE（2026-10-21）の影響調査 → 影響なし",
+    detail: "CVE-2026-109618 / CVE-2026-109619（いずれもCVSS 9.2、未認証リモートコード実行）を調査。対象は PHP-FPM / mod_php / php-cgi / FrankenPHP / LiteSpeed など「PHPでWebリクエストを処理している環境」。SafeBiteは Next.js 16 + React 19 + TypeScript（Vercel／Node）、Cloudflare Workers（JS）、Upstash Redis 構成で、リポジトリ内に .php / composer.json / .htaccess は1件も存在しないことを確認済み。対応不要。",
+    completedAt: "2026-10-21",
+  },
+  {
     id: 40,
     priority: "P4",
     status: "todo",
