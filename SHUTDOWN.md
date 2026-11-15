@@ -71,30 +71,54 @@ X監視の自動取得は停止済みなので、新たなデータ蓄積は発�
 
 ---
 
-## 🟡 任意・好きなタイミングで（課金停止・アカウント整理）
+## 📋 関連サービス完全一覧（2026-11-15 棚卸し）
 
-### Upstash — Redisデータベース削除
-- データは既に空。課金停止のためDB自体を削除
+### ❌ 2027年5月まで消さないこと（消すとサイトが止まる）
 
-### アフィリエイト — 提携解除・退会
+| サービス | 用途 | 課金 |
+|---|---|---|
+| **Vercel** | サイトのホスティング | Hobby＝無料 |
+| **Upstash Redis** | データストア（現在空） | 無料枠 |
+| **Anthropic API** | AIチェッカーの判定 | **従量課金**（利用ごと） |
+| **Cloudflare** | ドメイン・DNS・メール転送 | 自動更新OFF済み＝追加費用なし |
+| **Resend** | メール送信 | 無料枠 |
+| **Google OAuth**（Google Cloud Console） | `/dev` のログイン | 無料 |
+
+→ 実質ほぼ無料で維持できるため、**2027年5月まで放置して問題ない**。
+→ 唯一の従量課金は Anthropic API だが、6ヶ月の累計利用が50件のため影響は軽微。
+   APIルートにはレートリミットがあり、濫用による高額化も抑制されている。
+
+### ✅ 今すぐ失効させてよい（停止済みで、もう使っていない）
+
+スクリプトは全て停止済みなので、以下のキーは失効させても何も壊れない。
+生きたまま放置するより、消す方が安全。
+
+| キー（`scripts/.env`） | 発行元 | 現状 |
+|---|---|---|
+| `X_API_KEY` / `X_API_SECRET` / `X_ACCESS_TOKEN` / `X_ACCESS_TOKEN_SECRET` | X Developer Portal | 自動投稿・監視とも停止済み |
+| `GEMINI_API_KEY` | Google AI Studio | 投稿文生成用。停止済み |
+| `XAI_API_KEY` | xAI | トレンド取得用。停止済み |
+| `MONITOR_SECRET` / `EMAIL_INBOUND_SECRET` | 自前の文字列 | 失効作業は不要 |
+
+### 💰 お金が絡む → 退会前に確認
+
 - **A8.net**（https://pub.a8.net）— 債務整理・ノートンの提携解除 → 退会
 - **バリューコマース**（アルバイトEX）— 提携解除 → 退会
-- ※ 未確定の成果報酬がある場合は入金後に退会すること
+- ※ **未確定・未入金の成果報酬があれば、入金後に退会すること**
+  （実績としては成果ゼロのため、おそらく残高なし）
 
-### Resend
-- https://resend.com/dashboard → APIキー削除 → アカウント削除
+### 🟢 消さなくても害はない（好みで判断）
 
-### SNSアカウント
+- **GitHub** https://github.com/fujimura1122-byte/safebite
+  - **現在 Public**。ただし `.gitignore` で `.env*` を除外済みで、
+    git履歴に秘密情報の混入がないことを確認済み（2026-11-15）
+  - コードを公開したままにしたくなければ Private化 または Archive
+- **GA4**（G-38B60QXS6D）/ **Google Search Console** — プロパティ削除は任意
 - **TikTok @safebite_jp** — 削除 or 放置
 - **X @bite_safe** — 凍結中。異議申し立てを取り下げて放置でよい
 
-### 計測ツール
-- **GA4**（G-38B60QXS6D）/ **Google Search Console** — プロパティ削除
+### 🖥 ローカル環境（最後に）
 
-### GitHub
-- https://github.com/fujimura1122-byte/safebite — Private化 または Archive
-
-### ローカル環境
 - Windowsタスクスケジューラーから SafeBite_* 4タスクを削除
   ```powershell
   schtasks /Delete /TN "SafeBite_Monitor" /F
@@ -102,7 +126,7 @@ X監視の自動取得は停止済みなので、新たなデータ蓄積は発�
   schtasks /Delete /TN "SafeBite_Broadcast_0530" /F
   schtasks /Delete /TN "SafeBite_Broadcast_1330" /F
   ```
-- `.env.local` / `scripts/.env` に各種APIキーが残っているため、不要なら削除
+- `.env.local` / `scripts/.env` にAPIキーが残っている。上記の失効作業後に削除
 
 ---
 
