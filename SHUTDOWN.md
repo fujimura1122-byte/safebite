@@ -88,17 +88,31 @@ X監視の自動取得は停止済みなので、新たなデータ蓄積は発�
 → 唯一の従量課金は Anthropic API だが、6ヶ月の累計利用が50件のため影響は軽微。
    APIルートにはレートリミットがあり、濫用による高額化も抑制されている。
 
-### ✅ 今すぐ失効させてよい（停止済みで、もう使っていない）
+### ✅ APIキーの失効（2026-11-15 実施）
 
-スクリプトは全て停止済みなので、以下のキーは失効させても何も壊れない。
-生きたまま放置するより、消す方が安全。
-
-| キー（`scripts/.env`） | 発行元 | 現状 |
+| キー（`scripts/.env`） | 発行元 | 状態 |
 |---|---|---|
-| `X_API_KEY` / `X_API_SECRET` / `X_ACCESS_TOKEN` / `X_ACCESS_TOKEN_SECRET` | X Developer Portal | 自動投稿・監視とも停止済み |
-| `GEMINI_API_KEY` | Google AI Studio | 投稿文生成用。停止済み |
-| `XAI_API_KEY` | xAI | トレンド取得用。停止済み |
-| `MONITOR_SECRET` / `EMAIL_INBOUND_SECRET` | 自前の文字列 | 失効作業は不要 |
+| `GEMINI_API_KEY` | Google AI Studio | **✅ 削除済み**（プロジェクト「SafeBite」/ 作成2026-05-19 のキーのみ。別プロジェクトの "Short video creation" / "TradingBot" のキーは保持） |
+| `XAI_API_KEY` | xAI Console | **✅ 削除済み**（SafeBiteチームの "Default" キー。残キー0件） |
+| `X_API_KEY` / `X_API_SECRET` / `X_ACCESS_TOKEN` / `X_ACCESS_TOKEN_SECRET` | X Developer Portal | **⚠️ 未実施** — 下記参照 |
+| `MONITOR_SECRET` / `EMAIL_INBOUND_SECRET` | 自前の文字列 | 失効作業は不要（Vercel削除時に消滅） |
+
+#### X APIキーについて（未実施の理由）
+
+`developer.x.com` は `console.x.com/onboarding` にリダイレクトされ、
+**新しい開発者プログラムへの新規登録フォーム**（アカウント名入力・
+PPUパイロット契約への同意）が表示される。既存アプリの管理画面に到達できない。
+
+これは「キーの削除」ではなく「新規の規約同意とアカウント作成」にあたるため、
+Claudeでは実行していない。
+
+**実務上の判断**: @bite_safe は凍結済みであり、X ではアカウント凍結に伴い
+紐づく開発者アプリのAPIアクセスも停止されるのが通常。そのため
+**これらのキーは既に機能していない可能性が高い**。ポータルに到達できないため
+確認はできないが、放置によるリスクは低いと考えられる。
+
+気になる場合は、X の凍結異議申し立てが解決した後に
+`developer.x.com` から該当アプリを削除する。
 
 ### 💰 お金が絡む → 退会前に確認
 
