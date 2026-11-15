@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import Script from "next/script";
 import RouteTracker from "./_components/RouteTracker";
+import ClosureNotice from "./_components/ClosureNotice";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -52,6 +53,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         {children}
         <RouteTracker />
+        <ClosureNotice />
       </body>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-38B60QXS6D"
