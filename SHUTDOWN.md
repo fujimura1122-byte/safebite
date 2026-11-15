@@ -1,151 +1,118 @@
-# SafeBite（saferbite.org）閉鎖手順書
+# SafeBite（saferbite.org）閉鎖 進捗と残タスク
 
-**決定**: 完全閉鎖（ドメインも手放す）
-**方針変更（2026-11-15）**: 即時閉鎖はせず、**ドメイン失効日 2027-05-19 までサイトを公開したまま運用**し、自然失効をもって終了する。
+**最終更新**: 2026-11-15
 
 | | |
 |---|---|
+| 方針 | 完全閉鎖（ドメインも手放す） |
 | 運用開始 | 2026-05-19 |
-| **サービス終了日** | **2027-05-19**（ドメイン失効日） |
+| **サービス終了日** | **2027-05-19**（ドメイン自然失効） |
 | 終了告知の表示開始 | 2027-03-19（自動） |
 
 ---
 
-## 最終実績（記録）
+## 📊 現在の状態（2026-11-15 実機確認）
 
-| 指標 | 件数 |
-|------|------|
-| AIチェッカー利用 | 50 |
-| 通報文生成 | 117 |
-| IHC通報確認 | 109 |
-| SOSテンプレ生成 | 1 |
-| X監視での闇バイト検知投稿 | 200（削除済み） |
+| 項目 | 状態 |
+|---|---|
+| サイト | 🟢 **稼働中**（HTTP 200・通常どおり利用可能） |
+| ドメイン | 🟢 有効／**自動更新OFF済み** → 2027-05-19 失効 |
+| メール受信 | 🟢 **受信可能**（MXレコード3件・`contact@saferbite.org`） |
+| Redis | ✅ **空**（残存0キー） |
+| スケジューラ | ✅ **4タスクすべて無効** |
+| 終了告知バナー | ✅ 実装・デプロイ済み（2027-03-19に自動表示） |
 
-詳細: `C:\Users\Atsushi Fujimura\Documents\safebite-最終実績記録.json`
+> **いま行動は不要。** 維持コストは実質ゼロ（従量課金はAnthropic APIのみ、累計50件）。
 
 ---
 
 ## ✅ 完了済み
 
-- [x] **X自動投稿タスク停止** — SafeBite_Broadcast_0030 / 0530 / 1330 を Disabled（2026-05-26）
-- [x] **X監視タスク停止** — SafeBite_Monitor を Disabled（2026-10-21）
-- [x] **Redis全データ削除** — 205キーを削除、残存0件（2026-11-15）
+- [x] X自動投稿タスク停止（Broadcast 0030/0530/1330）— 2026-05-26
+- [x] X監視タスク停止（SafeBite_Monitor）— 2026-10-21
+- [x] Redis全データ削除（205キー→0件）— 2026-11-15
   - 監視検知投稿200件（X利用者の第三者データ）を消去
-  - お問い合わせ経由の個人情報は元々0件
-  - 実績カウンターのみ上記JSONに退避してから削除
-- [x] **ドメイン自動更新をOFF** — Cloudflareで設定、再読込で保持を確認（2026-11-15）
-  - → これにより **2027-05-19 に自動失効**する。以後の更新料は発生しない
-  - ※ 同アカウントの `manseki.app` は自動更新ONのまま（無関係なので変更していない）
-- [x] **サービス終了のお知らせバナーを実装**（2026-11-15）
-  - `app/_components/ClosureNotice.tsx` を `layout.tsx` に設置、全ページ共通
-  - **2027-03-19 から自動で表示開始**（人が覚えておく必要なし）
-  - 公的窓口（#9110 / 法テラス / こども家庭庁）へ誘導
-  - クライアントコンポーネントで実装。サーバー側で日付判定するとビルド時刻で
-    固定され永久に表示されないため、訪問者のブラウザで現在日時を判定している
+  - 問い合わせ経由の個人情報は元々0件
+  - 実績カウンターのみ `Documents\safebite-最終実績記録.json` に退避
+- [x] ドメイン自動更新OFF（Cloudflare・再読込で保持を確認）— 2026-11-15
+  - 同アカウントの `manseki.app` は変更していない
+- [x] 終了告知バナー実装（`app/_components/ClosureNotice.tsx`）— 2026-11-15
+- [x] Gemini APIキー削除（プロジェクト「SafeBite」のみ）— 2026-11-15
+  - 別プロジェクト "Short video creation" / "TradingBot" のキーは保持
+- [x] xAI APIキー削除（SafeBiteチーム・残0件）— 2026-11-15
+- [x] GitHub の秘密情報混入チェック — 問題なし（`.gitignore`で`.env*`除外、履歴にも混入なし）
 
 ---
 
-## 🔵 いまは何もしなくてよい（2027年5月まで）
+# 📋 残タスク
 
-サイトは公開したまま、通常どおり利用できる状態を維持する。
-X監視の自動取得は停止済みなので、新たなデータ蓄積は発生しない。
-ドメイン更新料も自動更新OFF済みのため追加で発生しない。
+## 🅰 いつでもよい（課金・リスクなし／完全に任意）
 
-**注意**: `contact@saferbite.org` は受信可能な状態が続く。
-問い合わせが来ても対応しない場合は、下記「任意」の対応を検討する。
+- [ ] **GitHubリポジトリの扱いを決める**
+  現在 **Public**。秘密情報の混入はなし（確認済み）なので緊急性なし。
+  非公開にしたければ Private化 または Archive。
+  → https://github.com/fujimura1122-byte/safebite → Settings
+- [ ] **GA4プロパティ削除**（G-38B60QXS6D）→ https://analytics.google.com
+- [ ] **Search Consoleプロパティ削除** → https://search.google.com/search-console
+- [ ] **TikTok @safebite_jp** — 削除 or 放置
+- [ ] **X @bite_safe** — 凍結中。異議申し立てを取り下げ or 放置
+- [ ] **X APIキー4本の削除** — 現状ポータルに到達不可（詳細は末尾の注記）
 
----
+## 🅱 お金が絡む（早めの確認を推奨）
 
-## 📌 2027年5月（終了直前）に行う作業
+- [ ] **A8.net** https://pub.a8.net
+  未確定・未入金の成果報酬がないか確認 →（あれば入金後に）提携解除 → 退会
+- [ ] **バリューコマース**（アルバイトEX）
+  同上。成果はゼロ実績のため、おそらく残高なし
 
-この2つを実施すると実質的に閉鎖が完了する。**それまでは実行しないこと**
-（先に実行するとサイトが消える / 問い合わせが黙って壊れる）。
+## 🅲 2027年5月（終了直前）— ⚠️ 順序厳守・それまで実行しないこと
 
-### 1. Cloudflare — Email Routing を無効化
-- dash.cloudflare.com → saferbite.org → **Email** → Email Routing を Disable
-- `contact@saferbite.org` の受信が停止する
+> 先に実行するとサイトが消える／問い合わせが黙って壊れます。
 
-### 2. Vercel — プロジェクト削除
-- https://vercel.com/fujimura1122-bytes-projects/safebite → Settings → 最下部 **Delete Project**
-- これでサイトが表示されなくなる
-
----
-
-## 📋 関連サービス完全一覧（2026-11-15 棚卸し）
-
-### ❌ 2027年5月まで消さないこと（消すとサイトが止まる）
-
-| サービス | 用途 | 課金 |
-|---|---|---|
-| **Vercel** | サイトのホスティング | Hobby＝無料 |
-| **Upstash Redis** | データストア（現在空） | 無料枠 |
-| **Anthropic API** | AIチェッカーの判定 | **従量課金**（利用ごと） |
-| **Cloudflare** | ドメイン・DNS・メール転送 | 自動更新OFF済み＝追加費用なし |
-| **Resend** | メール送信 | 無料枠 |
-| **Google OAuth**（Google Cloud Console） | `/dev` のログイン | 無料 |
-
-→ 実質ほぼ無料で維持できるため、**2027年5月まで放置して問題ない**。
-→ 唯一の従量課金は Anthropic API だが、6ヶ月の累計利用が50件のため影響は軽微。
-   APIルートにはレートリミットがあり、濫用による高額化も抑制されている。
-
-### ✅ APIキーの失効（2026-11-15 実施）
-
-| キー（`scripts/.env`） | 発行元 | 状態 |
-|---|---|---|
-| `GEMINI_API_KEY` | Google AI Studio | **✅ 削除済み**（プロジェクト「SafeBite」/ 作成2026-05-19 のキーのみ。別プロジェクトの "Short video creation" / "TradingBot" のキーは保持） |
-| `XAI_API_KEY` | xAI Console | **✅ 削除済み**（SafeBiteチームの "Default" キー。残キー0件） |
-| `X_API_KEY` / `X_API_SECRET` / `X_ACCESS_TOKEN` / `X_ACCESS_TOKEN_SECRET` | X Developer Portal | **⚠️ 未実施** — 下記参照 |
-| `MONITOR_SECRET` / `EMAIL_INBOUND_SECRET` | 自前の文字列 | 失効作業は不要（Vercel削除時に消滅） |
-
-#### X APIキーについて（未実施の理由）
-
-`developer.x.com` は `console.x.com/onboarding` にリダイレクトされ、
-**新しい開発者プログラムへの新規登録フォーム**（アカウント名入力・
-PPUパイロット契約への同意）が表示される。既存アプリの管理画面に到達できない。
-
-これは「キーの削除」ではなく「新規の規約同意とアカウント作成」にあたるため、
-Claudeでは実行していない。
-
-**実務上の判断**: @bite_safe は凍結済みであり、X ではアカウント凍結に伴い
-紐づく開発者アプリのAPIアクセスも停止されるのが通常。そのため
-**これらのキーは既に機能していない可能性が高い**。ポータルに到達できないため
-確認はできないが、放置によるリスクは低いと考えられる。
-
-気になる場合は、X の凍結異議申し立てが解決した後に
-`developer.x.com` から該当アプリを削除する。
-
-### 💰 お金が絡む → 退会前に確認
-
-- **A8.net**（https://pub.a8.net）— 債務整理・ノートンの提携解除 → 退会
-- **バリューコマース**（アルバイトEX）— 提携解除 → 退会
-- ※ **未確定・未入金の成果報酬があれば、入金後に退会すること**
-  （実績としては成果ゼロのため、おそらく残高なし）
-
-### 🟢 消さなくても害はない（好みで判断）
-
-- **GitHub** https://github.com/fujimura1122-byte/safebite
-  - **現在 Public**。ただし `.gitignore` で `.env*` を除外済みで、
-    git履歴に秘密情報の混入がないことを確認済み（2026-11-15）
-  - コードを公開したままにしたくなければ Private化 または Archive
-- **GA4**（G-38B60QXS6D）/ **Google Search Console** — プロパティ削除は任意
-- **TikTok @safebite_jp** — 削除 or 放置
-- **X @bite_safe** — 凍結中。異議申し立てを取り下げて放置でよい
-
-### 🖥 ローカル環境（最後に）
-
-- Windowsタスクスケジューラーから SafeBite_* 4タスクを削除
+- [ ] **1. Cloudflare — Email Routing を無効化**
+  dash.cloudflare.com → saferbite.org → Email → Disable
+  → `contact@saferbite.org` の受信が停止
+- [ ] **2. Vercel — プロジェクト削除**
+  https://vercel.com/fujimura1122-bytes-projects/safebite → Settings → Delete Project
+  → **これでサイトが消えます**
+- [ ] **3. Upstash — Redisデータベース削除**（データは既に空。課金停止のため）
+- [ ] **4. Resend — APIキー削除 → アカウント削除**
+- [ ] **5. Google OAuthクライアント削除**（Google Cloud Console・`/dev`ログイン用）
+- [ ] **6. ローカル: スケジューラタスク4本を削除**
   ```powershell
   schtasks /Delete /TN "SafeBite_Monitor" /F
   schtasks /Delete /TN "SafeBite_Broadcast_0030" /F
   schtasks /Delete /TN "SafeBite_Broadcast_0530" /F
   schtasks /Delete /TN "SafeBite_Broadcast_1330" /F
   ```
-- `.env.local` / `scripts/.env` にAPIキーが残っている。上記の失効作業後に削除
+- [ ] **7. ローカル: `.env.local` / `scripts/.env` を削除**（APIキーが残っているため）
+
+## 🅳 自動で起こること（作業不要）
+
+- **2027-03-19** 終了告知バナーが全ページに自動表示（公的窓口へ誘導）
+- **2027-05-19** ドメインが自動失効。以後サイトは表示されなくなる
 
 ---
 
-## 補足
+## 📌 注記
 
-- 失効後は第三者が `saferbite.org` を取得可能になる。
-- 終了告知の日付を前倒し／後ろ倒ししたい場合は
-  `app/_components/ClosureNotice.tsx` の `NOTICE_FROM` を変更して再デプロイする。
+### X APIキーを削除できていない理由
+`developer.x.com` は `console.x.com/onboarding` に転送され、**新しい開発者
+プログラムへの新規登録フォーム**（アカウント名入力・PPUパイロット契約への
+同意）が表示される。既存アプリの管理画面に到達できない。
+これは「キー削除」ではなく「新規の規約同意とアカウント作成」のため未実行。
+
+**実務上の判断**: @bite_safe は凍結済みで、X ではアカウント凍結時に紐づく
+開発者アプリのAPIアクセスも停止されるのが通常。**キーは既に機能していない
+可能性が高く**、放置によるリスクは低い。
+
+### 失効後について
+2027-05-19 以降、`saferbite.org` は第三者が取得可能になる。
+
+### 告知日を変更したい場合
+`app/_components/ClosureNotice.tsx` の `NOTICE_FROM` を書き換えて再デプロイ。
+
+### 最終実績（記録）
+AIチェッカー利用 50 ／ 通報文生成 117 ／ IHC通報確認 109 ／ SOSテンプレ 1
+／ 闇バイト検知投稿 200（削除済み）
+詳細: `C:\Users\Atsushi Fujimura\Documents\safebite-最終実績記録.json`
